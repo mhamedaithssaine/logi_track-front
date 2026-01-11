@@ -1,0 +1,74 @@
+<div class="login-container">
+  <div class="login-card">
+    <div class="login-header">
+      <h1>Connexion</h1>
+      <p>Connectez-vous à votre compte LogiTrack</p>
+    </div>
+
+    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="login-form">
+
+      <!-- Email -->
+      <div class="form-group">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          class="form-control"
+          [class.error]="hasError('email')"
+          placeholder="votre.email@example.com"
+          autocomplete="email"
+        />
+        @if (hasError('email')) {
+          <span class="error-message">{{ getErrorMessage('email') }}</span>
+        }
+      </div>
+
+      <!-- Password -->
+      <div class="form-group">
+        <label for="password">Mot de passe</label>
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          class="form-control"
+          [class.error]="hasError('password')"
+          placeholder="••••••••"
+          autocomplete="current-password"
+        />
+        @if (hasError('password')) {
+          <span class="error-message">{{ getErrorMessage('password') }}</span>
+        }
+      </div>
+
+      <!-- Remember Me -->
+      <div class="form-group checkbox-group">
+        <label class="checkbox-label">
+          <input type="checkbox" formControlName="rememberMe" />
+          <span>Se souvenir de moi</span>
+        </label>
+      </div>
+
+      <!-- Submit Button -->
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="isLoading || loginForm.invalid"
+      >
+        @if (isLoading) {
+          <span>Connexion en cours...</span>
+        } @else {
+          <span>Se connecter</span>
+        }
+      </button>
+    </form>
+
+    <!-- Link to Register -->
+    <div class="login-footer">
+      <p>
+        Pas encore de compte ?
+        <a routerLink="/auth/register">Créer un compte</a>
+      </p>
+    </div>
+  </div>
+</div>

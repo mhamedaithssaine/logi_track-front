@@ -1,0 +1,144 @@
+<div class="register-container">
+  <div class="register-card">
+    <div class="register-header">
+      <h1>Créer un compte</h1>
+      <p>Inscrivez-vous pour accéder à LogiTrack</p>
+    </div>
+
+    <form [formGroup]="registerForm" (ngSubmit)="onSubmit()" class="register-form">
+      <!-- Nom complet - Pleine largeur -->
+      <div class="form-group form-group-full">
+        <label for="name">Nom complet</label>
+        <input
+          type="text"
+          id="name"
+          formControlName="name"
+          class="form-control"
+          [class.error]="hasError('name')"
+          placeholder="Jean Dupont"
+          autocomplete="name"
+        />
+        @if (hasError('name')) {
+          <span class="error-message">{{ getErrorMessage('name') }}</span>
+        }
+      </div>
+
+      <!-- Email et Téléphone - 2 colonnes -->
+      <div class="form-group form-group-half">
+        <label for="email">Email</label>
+        <input
+          type="email"
+          id="email"
+          formControlName="email"
+          class="form-control"
+          [class.error]="hasError('email')"
+          placeholder="votre.email@example.com"
+          autocomplete="email"
+        />
+        @if (hasError('email')) {
+          <span class="error-message">{{ getErrorMessage('email') }}</span>
+        }
+      </div>
+
+      <div class="form-group form-group-half">
+        <label for="phone">Téléphone</label>
+        <input
+          type="tel"
+          id="phone"
+          formControlName="phone"
+          class="form-control"
+          [class.error]="hasError('phone')"
+          placeholder="+212612345678"
+          autocomplete="tel"
+        />
+        @if (hasError('phone')) {
+          <span class="error-message">{{ getErrorMessage('phone') }}</span>
+        }
+      </div>
+
+      <!-- Adresse - Pleine largeur -->
+      <div class="form-group form-group-full">
+        <label for="address">Adresse <span class="optional">(optionnel)</span></label>
+        <input
+          type="text"
+          id="address"
+          formControlName="address"
+          class="form-control"
+          [class.error]="hasError('address')"
+          placeholder="123 Rue Principale, Marrakech"
+          autocomplete="street-address"
+        />
+        @if (hasError('address')) {
+          <span class="error-message">{{ getErrorMessage('address') }}</span>
+        }
+      </div>
+
+      <!-- Mot de passe et Confirmation - 2 colonnes -->
+      <div class="form-group form-group-half">
+        <label for="password">Mot de passe</label>
+        <input
+          type="password"
+          id="password"
+          formControlName="password"
+          class="form-control"
+          [class.error]="hasError('password')"
+          placeholder="••••••••"
+          autocomplete="new-password"
+        />
+        @if (hasError('password')) {
+          <span class="error-message">{{ getErrorMessage('password') }}</span>
+        }
+        @if (registerForm.get('password')?.value && !hasError('password')) {
+          <div class="password-strength">
+            <span class="strength-label">Force:</span>
+            <span [class]="'strength-' + getPasswordStrength()">
+              @switch (getPasswordStrength()) {
+                @case ('weak') { Faible }
+                @case ('medium') { Moyen }
+                @case ('strong') { Fort }
+              }
+            </span>
+          </div>
+        }
+      </div>
+
+      <div class="form-group form-group-half">
+        <label for="confirmPassword">Confirmer le mot de passe</label>
+        <input
+          type="password"
+          id="confirmPassword"
+          formControlName="confirmPassword"
+          class="form-control"
+          [class.error]="hasError('confirmPassword')"
+          placeholder="••••••••"
+          autocomplete="new-password"
+        />
+        @if (hasError('confirmPassword')) {
+          <span class="error-message">{{ getErrorMessage('confirmPassword') }}</span>
+        }
+      </div>
+
+      <!-- Submit Button - Pleine largeur -->
+      <button
+        type="submit"
+        class="btn btn-primary btn-full"
+        [disabled]="isLoading || registerForm.invalid"
+      >
+        @if (isLoading) {
+          <span>Inscription en cours...</span>
+        } @else {
+          <span>Créer mon compte</span>
+        }
+      </button>
+    </form>
+
+    <!-- Link to Login -->
+    <div class="register-footer">
+      <p>
+        Déjà un compte ?
+        <a routerLink="/auth/login">Se connecter</a>
+      </p>
+    </div>
+  </div>
+</div>
+
