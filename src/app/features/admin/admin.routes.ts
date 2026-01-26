@@ -1,19 +1,36 @@
 import { Routes } from '@angular/router';
+import { AdminLayout } from '../../core/layout/admin-layout/admin-layout';
 
 /**
  * Routes pour le module Admin
- * TODO: Implémenter les routes admin (catalogue, entrepôts, achats, utilisateurs, reporting)
  */
 export const routes: Routes = [
   {
     path: '',
-    redirectTo: 'dashboard',
-    pathMatch: 'full',
+    component: AdminLayout,
+    children: [
+      {
+        path: '',
+        redirectTo: 'dashboard',
+        pathMatch: 'full',
+      },
+      {
+        path: 'dashboard',
+        loadComponent: () => import('./dashboard/dashboard').then((m) => m.AdminDashboard),
+      },
+      {
+        path: 'products',
+        loadComponent: () => import('./products/product-list/product-list').then((m) => m.ProductList),
+      },
+      {
+        path: 'products/new',
+        loadComponent: () => import('./products/product-form/product-form').then((m) => m.ProductForm),
+      },
+      {
+        path: 'products/:sku/edit',
+        loadComponent: () => import('./products/product-form/product-form').then((m) => m.ProductForm),
+      },
+    ],
   },
-  // TODO: Ajouter les routes admin
-  // {
-  //   path: 'dashboard',
-  //   loadComponent: () => import('./dashboard/dashboard').then((m) => m.Dashboard),
-  // },
 ];
 

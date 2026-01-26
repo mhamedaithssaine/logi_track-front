@@ -1,0 +1,52 @@
+<div class="admin-layout">
+  <!-- Sidebar -->
+  <aside class="sidebar">
+    <div class="sidebar-header">
+      <h2>LogiTrack</h2>
+      <p>Administration</p>
+    </div>
+    <nav class="sidebar-nav">
+      <a routerLink="/admin/dashboard" routerLinkActive="active" class="nav-item">
+        <span>📊</span> Dashboard
+      </a>
+      <a routerLink="/admin/products" routerLinkActive="active" class="nav-item">
+        <span>📦</span> Produits
+      </a>
+      <a routerLink="/admin/warehouses" routerLinkActive="active" class="nav-item">
+        <span>🏭</span> Entrepôts
+      </a>
+      <a routerLink="/admin/users" routerLinkActive="active" class="nav-item">
+        <span>👥</span> Utilisateurs
+      </a>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <!-- Header -->
+    <header class="header">
+      <div class="header-left">
+        <h1>Administration</h1>
+      </div>
+      <div class="header-right">
+        <span class="user-info">
+          {{ authService.getCurrentUser()?.email || 'Non connecté' }}
+        </span>
+        <button (click)="authService.logout()" class="btn-logout">
+          Déconnexion
+        </button>
+      </div>
+    </header>
+
+    <!-- Content -->
+    <main class="content">
+      <router-outlet />
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+      <p>&copy; 2026 LogiTrack - Tous droits réservés</p>
+    </footer>
+  </div>
+</div>
+

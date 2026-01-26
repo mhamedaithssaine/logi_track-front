@@ -1,0 +1,101 @@
+<div class="product-form">
+  <div class="form-header">
+    <h2>{{ isEditMode ? 'Modifier le produit' : 'Nouveau produit' }}</h2>
+    <a routerLink="/admin/products" class="btn btn-secondary">← Retour</a>
+  </div>
+
+  <form [formGroup]="productForm" (ngSubmit)="onSubmit()" class="form">
+    <!-- SKU (seulement en création) -->
+    @if (!isEditMode) {
+      <div class="form-group">
+        <label for="sku">SKU <span class="required">*</span></label>
+        <input
+          type="text"
+          id="sku"
+          formControlName="sku"
+          class="form-control"
+          [class.error]="hasError('sku')"
+          placeholder="PROD-001"
+        />
+        @if (hasError('sku')) {
+          <span class="error-message">{{ getErrorMessage('sku') }}</span>
+        }
+      </div>
+    }
+
+    <!-- Nom -->
+    <div class="form-group">
+      <label for="name">Nom <span class="required">*</span></label>
+      <input
+        type="text"
+        id="name"
+        formControlName="name"
+        class="form-control"
+        [class.error]="hasError('name')"
+        placeholder="Nom du produit"
+      />
+      @if (hasError('name')) {
+        <span class="error-message">{{ getErrorMessage('name') }}</span>
+      }
+    </div>
+
+    <!-- Catégorie -->
+    <div class="form-group">
+      <label for="category">Catégorie <span class="required">*</span></label>
+      <input
+        type="text"
+        id="category"
+        formControlName="category"
+        class="form-control"
+        [class.error]="hasError('category')"
+        placeholder="Catégorie du produit"
+      />
+      @if (hasError('category')) {
+        <span class="error-message">{{ getErrorMessage('category') }}</span>
+      }
+    </div>
+
+    <!-- Prix -->
+    <div class="form-group">
+      <label for="price">Prix (€) <span class="required">*</span></label>
+      <input
+        type="number"
+        id="price"
+        formControlName="price"
+        class="form-control"
+        [class.error]="hasError('price')"
+        placeholder="0.00"
+        step="0.01"
+        min="0"
+      />
+      @if (hasError('price')) {
+        <span class="error-message">{{ getErrorMessage('price') }}</span>
+      }
+    </div>
+
+    <!-- Statut actif -->
+    <div class="form-group checkbox-group">
+      <label class="checkbox-label">
+        <input type="checkbox" formControlName="active" />
+        <span>Produit actif</span>
+      </label>
+    </div>
+
+    <!-- Boutons -->
+    <div class="form-actions">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="isLoading || productForm.invalid"
+      >
+        @if (isLoading) {
+          <span>Enregistrement...</span>
+        } @else {
+          <span>{{ isEditMode ? 'Mettre à jour' : 'Créer' }}</span>
+        }
+      </button>
+      <a routerLink="/admin/products" class="btn btn-secondary">Annuler</a>
+    </div>
+  </form>
+</div>
+

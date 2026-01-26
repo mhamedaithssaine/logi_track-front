@@ -3,13 +3,11 @@ import { authGuard } from './core/guards/auth-guard';
 import { roleGuard } from './core/guards/role-guard';
 
 export const routes: Routes = [
-  // Route de démonstration des toasts (pour les tests)
   {
     path: 'toast-demo',
     loadComponent: () => import('./shared/components/toast-demo/toast-demo').then((m) => m.ToastDemoComponent),
   },
 
-  // Routes publiques (auth)
   {
     path: 'auth',
     children: [
@@ -24,7 +22,6 @@ export const routes: Routes = [
     ],
   },
 
-  // Routes protégées par authentification
   {
     path: 'admin',
     canActivate: [authGuard, roleGuard(['ADMIN'])],
@@ -41,7 +38,6 @@ export const routes: Routes = [
     loadChildren: () => import('./features/client/client.routes').then((m) => m.routes),
   },
 
-  // Route par défaut
   {
     path: '',
     redirectTo: '/auth/login',
