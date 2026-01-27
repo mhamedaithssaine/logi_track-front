@@ -1,6 +1,8 @@
 import { Component, OnInit, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ProductApiService } from '../../../core/api/product-api.service';
+import { SupplierApiService } from '../../../core/api/supplier-api.service';
+import { WarehouseApiService } from '../../../core/api/warehouse-api.service';
 
 @Component({
   selector: 'app-admin-dashboard',
@@ -14,15 +16,15 @@ import { ProductApiService } from '../../../core/api/product-api.service';
           <p class="stat-value">{{ productsCount }}</p>
         </div>
         <div class="stat-card">
+          <h3>Fournisseurs</h3>
+          <p class="stat-value">{{ suppliersCount }}</p>
+        </div>
+        <div class="stat-card">
           <h3>Entrepôts</h3>
-          <p class="stat-value">0</p>
+          <p class="stat-value">{{ warehousesCount }}</p>
         </div>
         <div class="stat-card">
           <h3>Commandes</h3>
-          <p class="stat-value">0</p>
-        </div>
-        <div class="stat-card">
-          <h3>Utilisateurs</h3>
           <p class="stat-value">0</p>
         </div>
       </div>
@@ -113,10 +115,16 @@ import { ProductApiService } from '../../../core/api/product-api.service';
 })
 export class AdminDashboard implements OnInit {
   private productService = inject(ProductApiService);
+  private supplierService = inject(SupplierApiService);
+  private warehouseService = inject(WarehouseApiService);
   productsCount = 0;
+  suppliersCount = 0;
+  warehousesCount = 0;
 
   ngOnInit(): void {
     this.loadProductsCount();
+    this.loadSuppliersCount();
+    this.loadWarehousesCount();
   }
 
   loadProductsCount(): void {
@@ -126,6 +134,28 @@ export class AdminDashboard implements OnInit {
       },
       error: (error) => {
         console.error('Erreur lors du chargement des produits:', error);
+      },
+    });
+  }
+
+  loadSuppliersCount(): void {
+    this.supplierService.getAllSuppliers().subscribe({
+      next: (suppliers) => {
+        this.suppliersCount = suppliers.length;
+      },
+      error: (error) => {
+        console.error('Erreur lors du chargement des fournisseurs:', error);
+      },
+    });
+  }
+
+  loadWarehousesCount(): void {
+    this.warehouseService.getAllWarehouses().subscribe({
+      next: (warehouses) => {
+        this.warehousesCount = warehouses.length;
+      },
+      error: (error) => {
+        console.error('Erreur lors du chargement des entrepôts:', error);
       },
     });
   }

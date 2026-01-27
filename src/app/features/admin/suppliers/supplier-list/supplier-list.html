@@ -1,0 +1,50 @@
+<div class="supplier-list">
+  <div class="header-actions">
+    <h2>Gestion des Fournisseurs</h2>
+    <a routerLink="/admin/suppliers/new" class="btn btn-primary">
+      + Nouveau Fournisseur
+    </a>
+  </div>
+
+  @if (isLoading) {
+    <div class="loading">
+      <p>Chargement des fournisseurs...</p>
+    </div>
+  } @else {
+    <div class="table-container">
+      <table class="suppliers-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Contact</th>
+            <th>Entrepôt</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (supplier of suppliers; track supplier.id) {
+            <tr>
+              <td>{{ supplier.id }}</td>
+              <td>{{ supplier.name }}</td>
+              <td>{{ supplier.contact || '-' }}</td>
+              <td>{{ supplier.warehouseName || '-' }}</td>
+              <td class="actions">
+                <a [routerLink]="['/admin/suppliers', supplier.id, 'edit']" class="btn-action btn-edit" title="Modifier">
+                  ✏️
+                </a>
+                <button (click)="deleteSupplier(supplier.id)" class="btn-action btn-delete" title="Supprimer">
+                  🗑️
+                </button>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="5" class="empty">Aucun fournisseur trouvé</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

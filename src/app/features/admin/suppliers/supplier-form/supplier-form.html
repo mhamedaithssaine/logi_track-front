@@ -1,0 +1,67 @@
+<div class="supplier-form">
+  <div class="form-header">
+    <h2>{{ isEditMode ? 'Modifier le fournisseur' : 'Nouveau fournisseur' }}</h2>
+    <a routerLink="/admin/suppliers" class="btn btn-secondary">← Retour</a>
+  </div>
+
+  <form [formGroup]="supplierForm" (ngSubmit)="onSubmit()" class="form">
+    <!-- Nom -->
+    <div class="form-group">
+      <label for="name">Nom <span class="required">*</span></label>
+      <input
+        type="text"
+        id="name"
+        formControlName="name"
+        class="form-control"
+        [class.error]="hasError('name')"
+        placeholder="Nom du fournisseur"
+      />
+      @if (hasError('name')) {
+        <span class="error-message">{{ getErrorMessage('name') }}</span>
+      }
+    </div>
+
+    <!-- Contact -->
+    <div class="form-group">
+      <label for="contact">Contact</label>
+      <input
+        type="text"
+        id="contact"
+        formControlName="contact"
+        class="form-control"
+        placeholder="Email ou téléphone"
+      />
+    </div>
+
+    <!-- Entrepôt -->
+    <div class="form-group">
+      <label for="warehouseId">Entrepôt</label>
+      <select
+        id="warehouseId"
+        formControlName="warehouseId"
+        class="form-control"
+      >
+        <option [value]="null">Aucun entrepôt</option>
+        @for (warehouse of warehouses; track warehouse.id) {
+          <option [value]="warehouse.id">{{ warehouse.name }} ({{ warehouse.code }})</option>
+        }
+      </select>
+    </div>
+
+    <!-- Boutons -->
+    <div class="form-actions">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="isLoading || supplierForm.invalid"
+      >
+        @if (isLoading) {
+          <span>Enregistrement...</span>
+        } @else {
+          <span>{{ isEditMode ? 'Mettre à jour' : 'Créer' }}</span>
+        }
+      </button>
+      <a routerLink="/admin/suppliers" class="btn btn-secondary">Annuler</a>
+    </div>
+  </form>
+</div>

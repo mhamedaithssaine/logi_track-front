@@ -1,0 +1,58 @@
+<div class="warehouse-form">
+  <div class="form-header">
+    <h2>{{ isEditMode ? 'Modifier l\'entrepôt' : 'Nouvel entrepôt' }}</h2>
+    <a routerLink="/admin/warehouses" class="btn btn-secondary">← Retour</a>
+  </div>
+
+  <form [formGroup]="warehouseForm" (ngSubmit)="onSubmit()" class="form">
+    <!-- Code (seulement en création) -->
+    @if (!isEditMode) {
+      <div class="form-group">
+        <label for="code">Code <span class="required">*</span></label>
+        <input
+          type="text"
+          id="code"
+          formControlName="code"
+          class="form-control"
+          [class.error]="hasError('code')"
+          placeholder="WH-001"
+        />
+        @if (hasError('code')) {
+          <span class="error-message">{{ getErrorMessage('code') }}</span>
+        }
+      </div>
+    }
+
+    <!-- Nom -->
+    <div class="form-group">
+      <label for="name">Nom <span class="required">*</span></label>
+      <input
+        type="text"
+        id="name"
+        formControlName="name"
+        class="form-control"
+        [class.error]="hasError('name')"
+        placeholder="Nom de l'entrepôt"
+      />
+      @if (hasError('name')) {
+        <span class="error-message">{{ getErrorMessage('name') }}</span>
+      }
+    </div>
+
+    <!-- Boutons -->
+    <div class="form-actions">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="isLoading || warehouseForm.invalid"
+      >
+        @if (isLoading) {
+          <span>Enregistrement...</span>
+        } @else {
+          <span>{{ isEditMode ? 'Mettre à jour' : 'Créer' }}</span>
+        }
+      </button>
+      <a routerLink="/admin/warehouses" class="btn btn-secondary">Annuler</a>
+    </div>
+  </form>
+</div>

@@ -30,7 +30,7 @@ export const routes: Routes = [
   {
     path: 'warehouse',
     canActivate: [authGuard, roleGuard(['WAREHOUSE_MANAGER'])],
-    loadChildren: () => import('./features/warehouse/warehouse.routes').then((m) => m.routes),
+    loadChildren: () => import('./features/warehouse-manager/warehouse.routes').then((m) => m.routes),
   },
   {
     path: 'client',
