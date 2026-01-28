@@ -15,8 +15,12 @@ import { toast } from '../../../../shared/services/toast.service';
 export class WarehouseForm implements OnInit {
   private fb = inject(FormBuilder);
   private warehouseService = inject(WarehouseApiService);
-  private router = inject(Router);
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
+  get basePath(): string {
+    return this.router.url.startsWith('/warehouse') ? '/warehouse' : '/admin';
+  }
 
   warehouseForm: FormGroup;
   isLoading = false;
@@ -80,7 +84,7 @@ export class WarehouseForm implements OnInit {
         next: () => {
           this.isLoading = false;
           toast.success('Entrepôt mis à jour avec succès');
-          this.router.navigate(['/admin/warehouses']);
+          this.router.navigate([this.basePath + '/warehouses']);
         },
         error: (error) => {
           this.isLoading = false;
@@ -98,7 +102,7 @@ export class WarehouseForm implements OnInit {
         next: () => {
           this.isLoading = false;
           toast.success('Entrepôt créé avec succès');
-          this.router.navigate(['/admin/warehouses']);
+          this.router.navigate([this.basePath + '/warehouses']);
         },
         error: (error) => {
           this.isLoading = false;

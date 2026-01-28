@@ -1,0 +1,50 @@
+<div class="wm-layout">
+  <!-- Top Bar - style industriel / logistics -->
+  <header class="wm-topbar">
+    <div class="wm-brand">
+      <span class="wm-logo">📦</span>
+      <div>
+        <h1>LogiTrack</h1>
+        <p>Espace Entrepôt</p>
+      </div>
+    </div>
+    <nav class="wm-nav">
+      <a routerLink="/warehouse/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="wm-nav-item">
+        <span>🏠</span> Tableau de bord
+      </a>
+      <a routerLink="/warehouse/products" routerLinkActive="active" class="wm-nav-item">
+        <span>📦</span> Produits
+      </a>
+      <a routerLink="/warehouse/suppliers" routerLinkActive="active" class="wm-nav-item">
+        <span>🚚</span> Fournisseurs
+      </a>
+      <a routerLink="/warehouse/warehouses" routerLinkActive="active" class="wm-nav-item">
+        <span>🏭</span> Entrepôts
+      </a>
+      <a routerLink="/warehouse/inventory" routerLinkActive="active" class="wm-nav-item">
+        <span>📋</span> Inventaire
+      </a>
+      <a routerLink="/warehouse/purchase-orders" routerLinkActive="active" class="wm-nav-item">
+        <span>📄</span> Commandes d'achat
+      </a>
+      <a routerLink="/warehouse/orders" routerLinkActive="active" class="wm-nav-item">
+        <span>🛒</span> Commandes
+      </a>
+      <a routerLink="/warehouse/shipments" routerLinkActive="active" class="wm-nav-item">
+        <span>🚢</span> Expéditions
+      </a>
+    </nav>
+    <div class="wm-user">
+      <span class="wm-email">{{ authService.getCurrentUser()?.email || 'Non connecté' }}</span>
+      <button (click)="authService.logout()" class="wm-logout">Déconnexion</button>
+    </div>
+  </header>
+
+  <main class="wm-content">
+    <router-outlet />
+  </main>
+
+  <footer class="wm-footer">
+    <p>LogiTrack — Espace Warehouse Manager &copy; 2026</p>
+  </footer>
+</div>

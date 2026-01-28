@@ -1,7 +1,7 @@
 <div class="warehouse-list">
   <div class="header-actions">
     <h2>Gestion des Entrepôts</h2>
-    <a routerLink="/admin/warehouses/new" class="btn btn-primary">
+    <a [routerLink]="basePath + '/warehouses/new'" class="btn btn-primary">
       + Nouvel Entrepôt
     </a>
   </div>
@@ -9,6 +9,12 @@
   @if (isLoading) {
     <div class="loading">
       <p>Chargement des entrepôts...</p>
+    </div>
+  } @else if (loadError) {
+    <div class="load-error">
+      <p>{{ loadError }}</p>
+      <p class="hint">Vérifiez que le backend est démarré et que vous avez les droits d'accès.</p>
+      <button type="button" class="btn btn-primary" (click)="loadWarehouses()">Réessayer</button>
     </div>
   } @else {
     <div class="table-container">
@@ -26,7 +32,7 @@
               <td>{{ warehouse.code }}</td>
               <td>{{ warehouse.name }}</td>
               <td class="actions">
-                <a [routerLink]="['/admin/warehouses', warehouse.code, 'edit']" class="btn-action btn-edit" title="Modifier">
+                <a [routerLink]="[basePath + '/warehouses', warehouse.code, 'edit']" class="btn-action btn-edit" title="Modifier">
                   ✏️
                 </a>
                 <button (click)="deleteWarehouse(warehouse.code)" class="btn-action btn-delete" title="Supprimer">

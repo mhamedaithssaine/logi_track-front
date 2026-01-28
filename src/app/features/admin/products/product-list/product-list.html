@@ -1,7 +1,7 @@
 <div class="product-list">
   <div class="header-actions">
     <h2>Gestion des Produits</h2>
-    <a routerLink="/admin/products/new" class="btn btn-primary">
+    <a [routerLink]="basePath + '/products/new'" class="btn btn-primary">
       + Nouveau Produit
     </a>
   </div>
@@ -36,7 +36,7 @@
                 </span>
               </td>
               <td class="actions">
-                <a [routerLink]="['/admin/products', product.sku, 'edit']" class="btn-action btn-edit" title="Modifier">
+                <a [routerLink]="[basePath + '/products', product.sku, 'edit']" class="btn-action btn-edit" title="Modifier">
                   ✏️
                 </a>
                 @if (product.active) {

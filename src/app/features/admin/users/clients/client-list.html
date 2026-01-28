@@ -1,0 +1,73 @@
+<div class="client-admin-list">
+  <div class="header-actions">
+    <h2>Clients</h2>
+    <a routerLink="/admin/users/clients/new" class="btn btn-primary">
+      + Nouveau Client
+    </a>
+  </div>
+
+  @if (isLoading) {
+    <div class="loading">
+      <p>Chargement des clients...</p>
+    </div>
+  } @else if (loadError) {
+    <div class="load-error">
+      <p>{{ loadError }}</p>
+      <p class="hint">Vérifiez que le backend est démarré et que vous êtes connecté en tant qu'admin.</p>
+      <button type="button" class="btn btn-primary" (click)="loadClients()">Réessayer</button>
+    </div>
+  } @else {
+    <div class="table-container">
+      <table class="products-table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Nom</th>
+            <th>Email</th>
+            <th>Téléphone</th>
+            <th>Actif</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (c of clients; track c.id) {
+            <tr>
+              <td>{{ c.id }}</td>
+              <td>{{ c.name }}</td>
+              <td>{{ c.email }}</td>
+              <td>{{ c.phone || '-' }}</td>
+              <td>
+                <span [class]="c.active ? 'badge-active' : 'badge-inactive'">
+                  {{ c.active ? 'Actif' : 'Inactif' }}
+                </span>
+              </td>
+              <td class="actions">
+                <a [routerLink]="['/admin/users/clients', c.id, 'edit']"
+                   class="btn-action btn-edit" title="Modifier">
+                  ✏️
+                </a>
+                @if (c.active) {
+                  <button (click)="deactivate(c.id)" class="btn-action btn-deactivate" title="Désactiver">
+                    ⏸️
+                  </button>
+                } @else {
+                  <button (click)="activate(c.id)" class="btn-action btn-activate" title="Activer">
+                    ▶️
+                  </button>
+                }
+                <button (click)="delete(c.id)" class="btn-action btn-delete" title="Supprimer">
+                  🗑️
+                </button>
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="6" class="empty">Aucun client trouvé</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>
+

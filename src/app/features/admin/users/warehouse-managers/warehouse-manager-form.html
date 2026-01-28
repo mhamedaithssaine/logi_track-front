@@ -1,0 +1,100 @@
+<div class="wm-admin-form">
+  <div class="form-header">
+    <h2>{{ isEditMode ? 'Modifier un Warehouse Manager' : 'Nouveau Warehouse Manager' }}</h2>
+    <a routerLink="/admin/users/warehouse-managers" class="btn btn-secondary">← Retour</a>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
+    <div class="form-group">
+      <label for="name">Nom <span class="required">*</span></label>
+      <input
+        id="name"
+        type="text"
+        formControlName="name"
+        class="form-control"
+        [class.error]="hasError('name')"
+      />
+      @if (hasError('name')) {
+        <span class="error-message">{{ getError('name') }}</span>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email <span class="required">*</span></label>
+      <input
+        id="email"
+        type="email"
+        formControlName="email"
+        class="form-control"
+        [class.error]="hasError('email')"
+        [readonly]="isEditMode"
+      />
+      @if (hasError('email')) {
+        <span class="error-message">{{ getError('email') }}</span>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="phone">Téléphone</label>
+      <input
+        id="phone"
+        type="text"
+        formControlName="phone"
+        class="form-control"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="warehouseId">Entrepôt <span class="required">*</span></label>
+      <select
+        id="warehouseId"
+        formControlName="warehouseId"
+        class="form-control"
+        [class.error]="hasError('warehouseId')"
+      >
+        <option [ngValue]="null">Sélectionner un entrepôt</option>
+        @for (w of warehouses; track w.id) {
+          <option [ngValue]="w.id">{{ w.name }} ({{ w.code }})</option>
+        }
+      </select>
+      @if (hasError('warehouseId')) {
+        <span class="error-message">{{ getError('warehouseId') }}</span>
+      }
+    </div>
+
+    <!-- Mot de passe uniquement en création -->
+    @if (!isEditMode) {
+      <div class="form-group">
+        <label for="password">Mot de passe <span class="required">*</span></label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          class="form-control"
+          [class.error]="hasError('password')"
+        />
+        @if (hasError('password')) {
+          <span class="error-message">{{ getError('password') }}</span>
+        }
+      </div>
+    }
+
+    <div class="form-actions">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="isLoading || form.invalid"
+      >
+        @if (isLoading) {
+          <span>Enregistrement...</span>
+        } @else {
+          <span>{{ isEditMode ? 'Mettre à jour' : 'Créer' }}</span>
+        }
+      </button>
+      <a routerLink="/admin/users/warehouse-managers" class="btn btn-secondary">
+        Annuler
+      </a>
+    </div>
+  </form>
+</div>
+

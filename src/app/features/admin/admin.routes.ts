@@ -54,6 +54,38 @@ export const routes: Routes = [
         path: 'warehouses/:code/edit',
         loadComponent: () => import('./warehouses/warehouse-form/warehouse-form').then((m) => m.WarehouseForm),
       },
+      {
+        path: 'users',
+        redirectTo: 'users/warehouse-managers',
+        pathMatch: 'full',
+      },
+      {
+        path: 'users/warehouse-managers',
+        loadComponent: () =>
+          import('./users/warehouse-managers/warehouse-manager-list').then((m) => m.WarehouseManagerList),
+      },
+      {
+        path: 'users/warehouse-managers/new',
+        loadComponent: () =>
+          import('./users/warehouse-managers/warehouse-manager-form').then((m) => m.WarehouseManagerForm),
+      },
+      {
+        path: 'users/warehouse-managers/:id/edit',
+        loadComponent: () =>
+          import('./users/warehouse-managers/warehouse-manager-form').then((m) => m.WarehouseManagerForm),
+      },
+      {
+        path: 'users/clients',
+        loadComponent: () => import('./users/clients/client-list').then((m) => m.ClientList),
+      },
+      {
+        path: 'users/clients/new',
+        loadComponent: () => import('./users/clients/client-form').then((m) => m.ClientForm),
+      },
+      {
+        path: 'users/clients/:id/edit',
+        loadComponent: () => import('./users/clients/client-form').then((m) => m.ClientForm),
+      },
     ],
   },
 ];

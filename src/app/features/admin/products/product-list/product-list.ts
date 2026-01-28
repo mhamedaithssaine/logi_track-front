@@ -1,6 +1,6 @@
-import { Component, OnInit, OnDestroy, ChangeDetectorRef, inject } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { ProductApiService } from '../../../../core/api/product-api.service';
 import { ProductResponseDto } from '../../../../core/models/product.models';
 import { toast } from '../../../../shared/services/toast.service';
@@ -15,6 +15,12 @@ import { finalize } from 'rxjs/operators';
 export class ProductList implements OnInit {
   private productService = inject(ProductApiService);
   private cdr = inject(ChangeDetectorRef);
+  private router = inject(Router);
+
+  /** Base path pour les liens (admin ou warehouse) */
+  get basePath(): string {
+    return this.router.url.startsWith('/warehouse') ? '/warehouse' : '/admin';
+  }
 
   products: ProductResponseDto[] = [];
   isLoading = false;

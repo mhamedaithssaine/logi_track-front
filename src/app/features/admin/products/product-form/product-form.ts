@@ -15,8 +15,12 @@ import { toast } from '../../../../shared/services/toast.service';
 export class ProductForm implements OnInit {
   private fb = inject(FormBuilder);
   private productService = inject(ProductApiService);
-  private router = inject(Router);
   private route = inject(ActivatedRoute);
+  private router = inject(Router);
+
+  get basePath(): string {
+    return this.router.url.startsWith('/warehouse') ? '/warehouse' : '/admin';
+  }
 
   productForm: FormGroup;
   isLoading = false;
@@ -89,7 +93,7 @@ export class ProductForm implements OnInit {
         next: () => {
           this.isLoading = false;
           toast.success('Produit mis à jour avec succès');
-          this.router.navigate(['/admin/products']);
+          this.router.navigate([this.basePath + '/products']);
         },
         error: (error) => {
           this.isLoading = false;
@@ -110,7 +114,7 @@ export class ProductForm implements OnInit {
         next: () => {
           this.isLoading = false;
           toast.success('Produit créé avec succès');
-          this.router.navigate(['/admin/products']);
+          this.router.navigate([this.basePath + '/products']);
         },
         error: (error) => {
           this.isLoading = false;

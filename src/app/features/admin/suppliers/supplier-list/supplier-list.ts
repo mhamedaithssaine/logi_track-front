@@ -1,6 +1,6 @@
 import { Component, OnInit, ChangeDetectorRef, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { SupplierApiService } from '../../../../core/api/supplier-api.service';
 import { SupplierResponseDto } from '../../../../core/models/supplier.models';
 import { toast } from '../../../../shared/services/toast.service';
@@ -15,6 +15,11 @@ import { finalize } from 'rxjs/operators';
 export class SupplierList implements OnInit {
   private supplierService = inject(SupplierApiService);
   private cdr = inject(ChangeDetectorRef);
+  private router = inject(Router);
+
+  get basePath(): string {
+    return this.router.url.startsWith('/warehouse') ? '/warehouse' : '/admin';
+  }
 
   suppliers: SupplierResponseDto[] = [];
   isLoading = false;

@@ -19,9 +19,11 @@ export class SupplierForm implements OnInit {
   private supplierService = inject(SupplierApiService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
-  private warehouseApiService  = inject(WarehouseApiService)
-  
-  
+  private warehouseApiService = inject(WarehouseApiService);
+
+  get basePath(): string {
+    return this.router.url.startsWith('/warehouse') ? '/warehouse' : '/admin';
+  }
 
   supplierForm: FormGroup;
   warehouses: WarehouseResponseDto[] = [];
@@ -104,7 +106,7 @@ export class SupplierForm implements OnInit {
         next: () => {
           this.isLoading = false;
           toast.success('Fournisseur mis à jour avec succès');
-          this.router.navigate(['/admin/suppliers']);
+          this.router.navigate([this.basePath + '/suppliers']);
         },
         error: (error) => {
           this.isLoading = false;
@@ -123,7 +125,7 @@ export class SupplierForm implements OnInit {
         next: () => {
           this.isLoading = false;
           toast.success('Fournisseur créé avec succès');
-          this.router.navigate(['/admin/suppliers']);
+          this.router.navigate([this.basePath + '/suppliers']);
         },
         error: (error) => {
           this.isLoading = false;

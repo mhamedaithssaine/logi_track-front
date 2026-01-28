@@ -1,0 +1,191 @@
+/* Dashboard Warehouse Manager - Style “command center” / industriel */
+
+.wm-dashboard {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.wm-hero {
+  text-align: center;
+  padding: 40px 24px 32px;
+  margin-bottom: 32px;
+  background: linear-gradient(135deg, rgba(13, 148, 136, 0.15) 0%, rgba(5, 150, 105, 0.08) 100%);
+  border: 1px solid rgba(13, 148, 136, 0.3);
+  border-radius: 16px;
+
+  h2 {
+    margin: 0 0 12px;
+    font-size: 28px;
+    font-weight: 700;
+    color: #fbbf24;
+    letter-spacing: -0.5px;
+  }
+
+  p {
+    margin: 0;
+    font-size: 16px;
+    color: #94a3b8;
+    max-width: 560px;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1.5;
+  }
+}
+
+.wm-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 20px;
+  margin-bottom: 40px;
+}
+
+.wm-stat-card {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 20px;
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid #334155;
+  border-radius: 12px;
+  transition: all 0.25s ease;
+
+  &:hover {
+    border-color: #0d9488;
+    box-shadow: 0 8px 24px rgba(13, 148, 136, 0.15);
+  }
+
+  .wm-stat-icon {
+    font-size: 36px;
+    line-height: 1;
+  }
+
+  .wm-stat-value {
+    display: block;
+    font-size: 28px;
+    font-weight: 700;
+    color: #f1f5f9;
+    line-height: 1.2;
+  }
+
+  .wm-stat-label {
+    display: block;
+    font-size: 13px;
+    color: #94a3b8;
+    margin-top: 4px;
+  }
+
+  .wm-stat-link {
+    margin-left: auto;
+    font-size: 13px;
+    font-weight: 600;
+    color: #0d9488;
+    text-decoration: none;
+
+    &:hover {
+      color: #5eead4;
+      text-decoration: underline;
+    }
+  }
+}
+
+.wm-stat-products { border-left: 4px solid #0d9488; }
+.wm-stat-suppliers { border-left: 4px solid #f59e0b; }
+.wm-stat-warehouses { border-left: 4px solid #8b5cf6; }
+
+.wm-actions {
+  margin-top: 24px;
+
+  h3 {
+    margin: 0 0 20px;
+    font-size: 18px;
+    font-weight: 600;
+    color: #e2e8f0;
+  }
+}
+
+.wm-action-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 16px;
+}
+
+.wm-action-tile {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  padding: 24px 16px;
+  background: rgba(30, 41, 59, 0.5);
+  border: 1px solid #334155;
+  border-radius: 12px;
+  text-decoration: none;
+  color: #e2e8f0;
+  transition: all 0.25s ease;
+
+  &:hover {
+    background: rgba(13, 148, 136, 0.12);
+    border-color: #0d9488;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+  }
+
+  .wm-action-icon {
+    font-size: 32px;
+    margin-bottom: 12px;
+    line-height: 1;
+  }
+
+  .wm-action-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: #f1f5f9;
+    margin-bottom: 4px;
+  }
+
+  .wm-action-desc {
+    font-size: 12px;
+    color: #94a3b8;
+    line-height: 1.3;
+  }
+}
+
+@media (max-width: 640px) {
+  .wm-hero {
+    padding: 28px 16px 24px;
+
+    h2 {
+      font-size: 22px;
+    }
+
+    p {
+      font-size: 14px;
+    }
+  }
+
+  .wm-stats {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .wm-action-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+  }
+
+  .wm-action-tile {
+    padding: 18px 12px;
+
+    .wm-action-icon {
+      font-size: 28px;
+    }
+
+    .wm-action-title {
+      font-size: 14px;
+    }
+
+    .wm-action-desc {
+      font-size: 11px;
+    }
+  }
+}

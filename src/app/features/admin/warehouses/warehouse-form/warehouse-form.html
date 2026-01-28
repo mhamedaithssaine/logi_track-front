@@ -1,7 +1,7 @@
 <div class="warehouse-form">
   <div class="form-header">
     <h2>{{ isEditMode ? 'Modifier l\'entrepôt' : 'Nouvel entrepôt' }}</h2>
-    <a routerLink="/admin/warehouses" class="btn btn-secondary">← Retour</a>
+    <a [routerLink]="basePath + '/warehouses'" class="btn btn-secondary">← Retour</a>
   </div>
 
   <form [formGroup]="warehouseForm" (ngSubmit)="onSubmit()" class="form">
@@ -52,7 +52,7 @@
           <span>{{ isEditMode ? 'Mettre à jour' : 'Créer' }}</span>
         }
       </button>
-      <a routerLink="/admin/warehouses" class="btn btn-secondary">Annuler</a>
+      <a [routerLink]="basePath + '/warehouses'" class="btn btn-secondary">Annuler</a>
     </div>
   </form>
 </div>

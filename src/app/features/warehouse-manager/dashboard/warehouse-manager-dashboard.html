@@ -1,0 +1,74 @@
+<div class="wm-dashboard">
+  <section class="wm-hero">
+    <h2>Espace Entrepôt</h2>
+    <p>Gérez vos produits, fournisseurs, inventaire et expéditions depuis ce tableau de bord.</p>
+  </section>
+
+  <section class="wm-stats">
+    <div class="wm-stat-card wm-stat-products">
+      <span class="wm-stat-icon">📦</span>
+      <div>
+        <span class="wm-stat-value">{{ productsCount }}</span>
+        <span class="wm-stat-label">Produits</span>
+      </div>
+      <a routerLink="/warehouse/products" class="wm-stat-link">Voir →</a>
+    </div>
+    <div class="wm-stat-card wm-stat-suppliers">
+      <span class="wm-stat-icon">🚚</span>
+      <div>
+        <span class="wm-stat-value">{{ suppliersCount }}</span>
+        <span class="wm-stat-label">Fournisseurs</span>
+      </div>
+      <a routerLink="/warehouse/suppliers" class="wm-stat-link">Voir →</a>
+    </div>
+    <div class="wm-stat-card wm-stat-warehouses">
+      <span class="wm-stat-icon">🏭</span>
+      <div>
+        <span class="wm-stat-value">{{ warehousesCount }}</span>
+        <span class="wm-stat-label">Entrepôts</span>
+      </div>
+      <a routerLink="/warehouse/warehouses" class="wm-stat-link">Voir →</a>
+    </div>
+  </section>
+
+  <section class="wm-actions">
+    <h3>Accès rapide</h3>
+    <div class="wm-action-grid">
+      <a routerLink="/warehouse/products" class="wm-action-tile">
+        <span class="wm-action-icon">📦</span>
+        <span class="wm-action-title">Produits</span>
+        <span class="wm-action-desc">Catalogue et stock</span>
+      </a>
+      <a routerLink="/warehouse/suppliers" class="wm-action-tile">
+        <span class="wm-action-icon">🚚</span>
+        <span class="wm-action-title">Fournisseurs</span>
+        <span class="wm-action-desc">Contacts et approvisionnement</span>
+      </a>
+      <a routerLink="/warehouse/warehouses" class="wm-action-tile">
+        <span class="wm-action-icon">🏭</span>
+        <span class="wm-action-title">Entrepôts</span>
+        <span class="wm-action-desc">Sites de stockage</span>
+      </a>
+      <a routerLink="/warehouse/inventory" class="wm-action-tile">
+        <span class="wm-action-icon">📋</span>
+        <span class="wm-action-title">Inventaire</span>
+        <span class="wm-action-desc">Mouvements et niveaux</span>
+      </a>
+      <a routerLink="/warehouse/purchase-orders" class="wm-action-tile">
+        <span class="wm-action-icon">📄</span>
+        <span class="wm-action-title">Commandes d'achat</span>
+        <span class="wm-action-desc">Réapprovisionnement</span>
+      </a>
+      <a routerLink="/warehouse/orders" class="wm-action-tile">
+        <span class="wm-action-icon">🛒</span>
+        <span class="wm-action-title">Commandes</span>
+        <span class="wm-action-desc">Commandes clients</span>
+      </a>
+      <a routerLink="/warehouse/shipments" class="wm-action-tile">
+        <span class="wm-action-icon">🚢</span>
+        <span class="wm-action-title">Expéditions</span>
+        <span class="wm-action-desc">Livraisons et suivi</span>
+      </a>
+    </div>
+  </section>
+</div>

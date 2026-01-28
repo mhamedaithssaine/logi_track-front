@@ -1,0 +1,109 @@
+<div class="client-admin-form">
+  <div class="form-header">
+    <h2>{{ isEditMode ? 'Modifier un client' : 'Nouveau client' }}</h2>
+    <a routerLink="/admin/users/clients" class="btn btn-secondary">← Retour</a>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="onSubmit()" class="form">
+    <div class="form-group">
+      <label for="name">Nom <span class="required">*</span></label>
+      <input
+        id="name"
+        type="text"
+        formControlName="name"
+        class="form-control"
+        [class.error]="hasError('name')"
+      />
+      @if (hasError('name')) {
+        <span class="error-message">{{ getError('name') }}</span>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="email">Email <span class="required">*</span></label>
+      <input
+        id="email"
+        type="email"
+        formControlName="email"
+        class="form-control"
+        [class.error]="hasError('email')"
+        [readonly]="isEditMode"
+      />
+      @if (isEditMode) {
+        <p class="field-hint">L'email ne peut pas être modifié.</p>
+      }
+      @if (hasError('email')) {
+        <span class="error-message">{{ getError('email') }}</span>
+      }
+    </div>
+
+    <div class="form-group">
+      <label for="phone">Téléphone</label>
+      <input
+        id="phone"
+        type="text"
+        formControlName="phone"
+        class="form-control"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="address">Adresse</label>
+      <input
+        id="address"
+        type="text"
+        formControlName="address"
+        class="form-control"
+      />
+    </div>
+
+    @if (isEditMode) {
+      <div class="form-group">
+        <label for="password">Nouveau mot de passe</label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          class="form-control"
+          [class.error]="hasError('password')"
+          placeholder="Laisser vide pour ne pas modifier"
+        />
+        @if (hasError('password')) {
+          <span class="error-message">{{ getError('password') }}</span>
+        }
+      </div>
+    } @else {
+      <div class="form-group">
+        <label for="password">Mot de passe <span class="required">*</span></label>
+        <input
+          id="password"
+          type="password"
+          formControlName="password"
+          class="form-control"
+          [class.error]="hasError('password')"
+        />
+        @if (hasError('password')) {
+          <span class="error-message">{{ getError('password') }}</span>
+        }
+      </div>
+    }
+
+    <div class="form-actions">
+      <button
+        type="submit"
+        class="btn btn-primary"
+        [disabled]="isLoading || form.invalid"
+      >
+        @if (isLoading) {
+          <span>Enregistrement...</span>
+        } @else {
+          <span>{{ isEditMode ? 'Mettre à jour' : 'Créer' }}</span>
+        }
+      </button>
+      <a routerLink="/admin/users/clients" class="btn btn-secondary">
+        Annuler
+      </a>
+    </div>
+  </form>
+</div>
+
