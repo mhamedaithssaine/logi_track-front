@@ -38,6 +38,15 @@ export class WarehouseManagerApiService {
   }
 
   /**
+   * Récupérer par email
+   */
+  getByEmail(email: string): Observable<WarehouseManagerResponseDto> {
+    return this.http.get<WarehouseManagerResponseDto>(
+      `${this.baseUrl}/email/${encodeURIComponent(email)}`
+    );
+  }
+
+  /**
    * Mettre à jour un Warehouse Manager
    */
   update(id: number, dto: WarehouseManagerUpdateDto): Observable<WarehouseManagerResponseDto> {

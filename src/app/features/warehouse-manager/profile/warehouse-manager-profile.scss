@@ -1,0 +1,191 @@
+.wm-profile {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 0;
+}
+
+.wm-profile-header {
+  margin-bottom: 24px;
+
+  .wm-profile-back {
+    display: inline-block;
+    margin-bottom: 12px;
+    font-size: 14px;
+    color: #94a3b8;
+    text-decoration: none;
+    transition: color 0.2s;
+
+    &:hover {
+      color: #5eead4;
+    }
+  }
+
+  h2 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: 600;
+    color: #f1f5f9;
+  }
+}
+
+.wm-profile-loading,
+.wm-profile-error {
+  text-align: center;
+  padding: 48px 24px;
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid #334155;
+  border-radius: 12px;
+
+  p {
+    margin: 0 0 16px;
+    color: #94a3b8;
+  }
+}
+
+.wm-profile-error .wm-btn {
+  margin-top: 8px;
+}
+
+.wm-profile-card {
+  padding: 24px;
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid #334155;
+  border-radius: 12px;
+}
+
+.wm-profile-field {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 16px;
+
+  &:last-of-type {
+    margin-bottom: 24px;
+  }
+}
+
+.wm-profile-label {
+  flex: 0 0 120px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #94a3b8;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.wm-profile-value {
+  font-size: 15px;
+  color: #e2e8f0;
+}
+
+.wm-badge-active,
+.wm-badge-inactive {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: 600;
+}
+
+.wm-badge-active {
+  background: rgba(13, 148, 136, 0.25);
+  color: #5eead4;
+}
+
+.wm-badge-inactive {
+  background: rgba(248, 113, 113, 0.2);
+  color: #fca5a5;
+}
+
+.wm-profile-actions {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.wm-profile-form {
+  padding: 24px;
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid #334155;
+  border-radius: 12px;
+}
+
+.wm-form-group {
+  margin-bottom: 20px;
+
+  label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 13px;
+    font-weight: 600;
+    color: #94a3b8;
+  }
+}
+
+.wm-form-control {
+  width: 100%;
+  max-width: 320px;
+  padding: 10px 14px;
+  font-size: 14px;
+  color: #e2e8f0;
+  background: rgba(15, 23, 42, 0.8);
+  border: 1px solid #475569;
+  border-radius: 8px;
+  outline: none;
+  transition: border-color 0.2s;
+
+  &:focus {
+    border-color: #0d9488;
+  }
+
+  &::placeholder {
+    color: #64748b;
+  }
+}
+
+select.wm-form-control {
+  cursor: pointer;
+}
+
+.wm-form-error {
+  display: block;
+  margin-top: 6px;
+  font-size: 12px;
+  color: #f87171;
+}
+
+.wm-btn {
+  padding: 10px 18px;
+  font-size: 14px;
+  font-weight: 600;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s;
+  border: none;
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+  }
+}
+
+.wm-btn-primary {
+  background: linear-gradient(135deg, #0d9488 0%, #059669 100%);
+  color: #fff;
+
+  &:hover:not(:disabled) {
+    filter: brightness(1.1);
+  }
+}
+
+.wm-btn-secondary {
+  background: transparent;
+  color: #94a3b8;
+  border: 1px solid #475569;
+
+  &:hover:not(:disabled) {
+    background: rgba(71, 85, 105, 0.3);
+    color: #e2e8f0;
+  }
+}

@@ -1,0 +1,78 @@
+<div class="wm-profile">
+  <div class="wm-profile-header">
+    <a routerLink="/warehouse/dashboard" class="wm-profile-back">← Retour au tableau de bord</a>
+    <h2>Mon profil</h2>
+  </div>
+
+  @if (isLoading && !profile) {
+    <div class="wm-profile-loading">
+      <p>Chargement du profil...</p>
+    </div>
+  } @else if (loadError) {
+    <div class="wm-profile-error">
+      <p>{{ loadError }}</p>
+      <button type="button" class="wm-btn wm-btn-primary" (click)="loadProfile()">Réessayer</button>
+    </div>
+  } @else if (profile) {
+    @if (!isEditing) {
+      <div class="wm-profile-card">
+        <div class="wm-profile-field">
+          <span class="wm-profile-label">Nom</span>
+          <span class="wm-profile-value">{{ profile.name }}</span>
+        </div>
+        <div class="wm-profile-field">
+          <span class="wm-profile-label">Email</span>
+          <span class="wm-profile-value">{{ profile.email }}</span>
+        </div>
+        <div class="wm-profile-field">
+          <span class="wm-profile-label">Téléphone</span>
+          <span class="wm-profile-value">{{ profile.phone || '—' }}</span>
+        </div>
+        <div class="wm-profile-field">
+          <span class="wm-profile-label">Entrepôt</span>
+          <span class="wm-profile-value">{{ profile.warehouseName || '—' }}</span>
+        </div>
+        <div class="wm-profile-field">
+          <span class="wm-profile-label">Statut</span>
+          <span [class]="profile.active ? 'wm-badge-active' : 'wm-badge-inactive'">
+            {{ profile.active ? 'Actif' : 'Inactif' }}
+          </span>
+        </div>
+        <div class="wm-profile-actions">
+          <button type="button" class="wm-btn wm-btn-primary" (click)="startEdit()">Modifier</button>
+        </div>
+      </div>
+    } @else {
+      <form class="wm-profile-form" [formGroup]="profileForm" (ngSubmit)="saveProfile()">
+        <div class="wm-form-group">
+          <label for="name">Nom</label>
+          <input id="name" type="text" formControlName="name" class="wm-form-control" />
+          @if (profileForm.get('name')?.invalid && profileForm.get('name')?.touched) {
+            <span class="wm-form-error">Nom requis (2–100 caractères)</span>
+          }
+        </div>
+        <div class="wm-form-group">
+          <label for="phone">Téléphone</label>
+          <input id="phone" type="text" formControlName="phone" class="wm-form-control" placeholder="Optionnel" />
+        </div>
+        <div class="wm-form-group">
+          <label for="warehouseId">Entrepôt</label>
+          <select id="warehouseId" formControlName="warehouseId" class="wm-form-control">
+            <option [ngValue]="null">— Aucun —</option>
+            @for (w of warehouses; track w.id) {
+              <option [ngValue]="w.id">{{ w.name }} ({{ w.code }})</option>
+            }
+          </select>
+        </div>
+        <div class="wm-profile-actions">
+          <button type="submit" class="wm-btn wm-btn-primary" [disabled]="profileForm.invalid || isLoading">
+            {{ isLoading ? 'Enregistrement…' : 'Enregistrer' }}
+          </button>
+          <button type="button" class="wm-btn wm-btn-secondary" (click)="cancelEdit()" [disabled]="isLoading">
+            Annuler
+          </button>
+        </div>
+      </form>
+    }
+  }
+</div>

@@ -4,6 +4,19 @@
     <p>Gérez vos produits, fournisseurs, inventaire et expéditions depuis ce tableau de bord.</p>
   </section>
 
+  @if (isLoading) {
+    <div class="wm-dashboard-loading">
+      <p>Chargement des données…</p>
+    </div>
+  } @else if (loadError) {
+    <div class="wm-dashboard-error">
+      <p>{{ loadError }}</p>
+      <p class="wm-dashboard-hint">Vérifiez que le backend est démarré et que vous êtes connecté.</p>
+      <button type="button" class="wm-dashboard-retry" (click)="loadAll()">Réessayer</button>
+    </div>
+  }
+
+  @if (!isLoading && !loadError) {
   <section class="wm-stats">
     <div class="wm-stat-card wm-stat-products">
       <span class="wm-stat-icon">📦</span>
@@ -71,4 +84,5 @@
       </a>
     </div>
   </section>
+  }
 </div>

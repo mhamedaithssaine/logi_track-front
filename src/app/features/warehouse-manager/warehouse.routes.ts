@@ -17,6 +17,11 @@ export const routes: Routes = [
           import('./dashboard/warehouse-manager-dashboard').then((m) => m.WarehouseManagerDashboard),
       },
       {
+        path: 'profile',
+        loadComponent: () =>
+          import('./profile/warehouse-manager-profile').then((m) => m.WarehouseManagerProfile),
+      },
+      {
         path: 'products',
         loadComponent: () =>
           import('../admin/products/product-list/product-list').then((m) => m.ProductList),
