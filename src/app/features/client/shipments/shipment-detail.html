@@ -1,0 +1,38 @@
+<div class="shipment-detail">
+  <a routerLink="/client/shipments" class="shipment-back">Retour expeditions</a>
+  @if (isLoading) {
+    <div class="shipment-loading"><p>Chargement...</p></div>
+  } @else if (loadError) {
+    <div class="shipment-error"><p>{{ loadError }}</p></div>
+  } @else if (shipment) {
+    <div class="shipment-detail-card">
+      <h2>Expedition #{{ shipment.shipmentId }}</h2>
+      <p><strong>Commande</strong> #{{ shipment.orderId }} | <strong>Transporteur</strong> {{ shipment.carrier }}</p>
+      <p class="shipment-tracking"><strong>Suivi</strong> {{ shipment.trackingNumber }}</p>
+      <p class="shipment-status"><span class="shipment-badge">{{ shipment.status }}</span></p>
+      <h3>Timeline</h3>
+      <div class="shipment-timeline">
+        @if (shipment.plannedDeparture) {
+          <div class="shipment-timeline-item"><span class="chip">PLANNED</span> Depart prevu {{ shipment.plannedDeparture | date:'short' }}</div>
+        }
+        @if (shipment.shippedAt) {
+          <div class="shipment-timeline-item"><span class="chip">IN_TRANSIT</span> Expedie {{ shipment.shippedAt | date:'short' }}</div>
+        }
+        @if (shipment.deliveredAt) {
+          <div class="shipment-timeline-item"><span class="chip">DELIVERED</span> Livre {{ shipment.deliveredAt | date:'short' }}</div>
+        }
+        @if (!shipment.plannedDeparture && !shipment.shippedAt && !shipment.deliveredAt) {
+          <div class="shipment-timeline-item"><span class="chip">{{ shipment.status }}</span> En attente</div>
+        }
+      </div>
+      @if (shipment.lines && shipment.lines.length) {
+        <h3>Lignes</h3>
+        <ul class="shipment-lines">
+          @for (l of shipment.lines; track l.sku) {
+            <li>{{ l.sku }} x {{ l.quantity }}</li>
+          }
+        </ul>
+      }
+    </div>
+  }
+</div>

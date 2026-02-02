@@ -1,0 +1,24 @@
+<div class="shipment-list">
+  <h2>Expéditions</h2>
+  <p class="shipment-desc">Liste des expéditions liées à vos commandes.</p>
+
+  @if (isLoading) {
+    <div class="shipment-loading"><p>Chargement...</p></div>
+  } @else if (loadError) {
+    <div class="shipment-error"><p>{{ loadError }}</p><button type="button" (click)="load()" class="shipment-retry">Reessayer</button></div>
+  } @else {
+    <div class="shipment-grid">
+      @for (s of shipments; track s.shipmentId) {
+        <a [routerLink]="['/client/shipments', s.orderId]" class="shipment-card">
+          <span class="shipment-id">#{{ s.shipmentId }}</span>
+          <span class="shipment-order">Commande #{{ s.orderId }}</span>
+          <span class="shipment-tracking">{{ s.trackingNumber }}</span>
+          <span class="shipment-carrier">{{ s.carrier }}</span>
+          <span class="shipment-badge" [class]="'status-' + (s.status || '').toLowerCase()">{{ s.status }}</span>
+        </a>
+      } @empty {
+        <p class="shipment-empty">Aucune expédition.</p>
+      }
+    </div>
+  }
+</div>

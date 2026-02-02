@@ -1,0 +1,38 @@
+<div class="order-create">
+  <a routerLink="/client/orders" class="order-back">Retour commandes</a>
+  <h2>Nouvelle commande</h2>
+  <p class="order-create-desc">Panier multi-lignes. Validation : qte > 0, produit actif.</p>
+
+  <p class="order-create-info">L'entrepôt sera choisi par le responsable après confirmation de la commande.</p>
+
+  <div class="order-create-form">
+    <h3>Panier</h3>
+    @if (cart.length === 0) {
+      <p class="order-empty">Panier vide. Ajoutez des produits depuis le catalogue puis revenez ici.</p>
+      <a routerLink="/client/catalogue" class="order-link-catalogue">Voir le catalogue</a>
+    } @else {
+      <ul class="order-cart">
+        @for (c of cart; track c.sku) {
+          <li class="order-cart-item">
+            <div class="order-cart-info">
+              <span class="order-cart-name">{{ c.name }}</span>
+              <span class="order-cart-sku">SKU {{ c.sku }}</span>
+            </div>
+            <div class="order-cart-qty">
+              <app-quantity-selector
+                [quantity]="c.qty"
+                [min]="1"
+                [max]="99"
+                (quantityChange)="setQty(c.sku, $event)"
+              />
+            </div>
+            <button type="button" (click)="removeFromCart(c.sku)" class="order-btn-rm" aria-label="Retirer">Retirer</button>
+          </li>
+        }
+      </ul>
+      <button type="button" (click)="submit()" [disabled]="submitLoading" class="order-btn-submit">
+        {{ submitLoading ? 'Création…' : 'Valider la commande' }}
+      </button>
+    }
+  </div>
+</div>

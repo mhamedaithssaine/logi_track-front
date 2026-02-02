@@ -1,58 +1,74 @@
-<div class="admin-layout">
-  <!-- Sidebar -->
-  <aside class="sidebar">
-    <div class="sidebar-header">
-      <h2>LogiTrack</h2>
-      <p>Administration</p>
+<div class="admin-layout dashboard-layout">
+  <aside class="dashboard-sidebar">
+    <div class="dashboard-sidebar__header">
+      <h2 class="dashboard-sidebar__title">LogiTrack</h2>
+      <p class="dashboard-sidebar__subtitle">Administration</p>
     </div>
-    <nav class="sidebar-nav">
-      <a routerLink="/admin/dashboard" routerLinkActive="active" class="nav-item">
-        <span>📊</span> Dashboard
+    <nav class="dashboard-sidebar__nav">
+      <a routerLink="/admin/dashboard" routerLinkActive="active" class="dashboard-nav__item">
+        <span class="dashboard-nav__icon" aria-hidden="true">📊</span>
+        Dashboard
       </a>
-      <a routerLink="/admin/products" routerLinkActive="active" class="nav-item">
-        <span>📦</span> Produits
+      <a routerLink="/admin/products" routerLinkActive="active" class="dashboard-nav__item">
+        <span class="dashboard-nav__icon" aria-hidden="true">📦</span>
+        Produits
       </a>
-      <a routerLink="/admin/suppliers" routerLinkActive="active" class="nav-item">
-        <span>🚚</span> Fournisseurs
+      <a routerLink="/admin/suppliers" routerLinkActive="active" class="dashboard-nav__item">
+        <span class="dashboard-nav__icon" aria-hidden="true">🚚</span>
+        Fournisseurs
       </a>
-      <a routerLink="/admin/warehouses" routerLinkActive="active" class="nav-item">
-        <span>🏭</span> Entrepôts
+      <a routerLink="/admin/warehouses" routerLinkActive="active" class="dashboard-nav__item">
+        <span class="dashboard-nav__icon" aria-hidden="true">🏭</span>
+        Entrepôts
       </a>
-      <a routerLink="/admin/users/warehouse-managers" routerLinkActive="active" class="nav-item">
-        <span>👥</span> Responsables d'entrepôt
+      <a routerLink="/admin/orders" routerLinkActive="active" class="dashboard-nav__item">
+        <span class="dashboard-nav__icon" aria-hidden="true">📋</span>
+        Commandes
       </a>
-      <a routerLink="/admin/users/clients" routerLinkActive="active" class="nav-item">
-        <span>👤</span> Clients
+      <a routerLink="/admin/purchase-orders" routerLinkActive="active" class="dashboard-nav__item">
+        <span class="dashboard-nav__icon" aria-hidden="true">📄</span>
+        Commandes d'achat
+      </a>
+      <a routerLink="/admin/carriers" routerLinkActive="active" class="dashboard-nav__item">
+        <span class="dashboard-nav__icon" aria-hidden="true">📬</span>
+        Transporteurs
+      </a>
+      <a routerLink="/admin/reporting" routerLinkActive="active" class="dashboard-nav__item">
+        <span class="dashboard-nav__icon" aria-hidden="true">📈</span>
+        Reporting
+      </a>
+      <a routerLink="/admin/settings" routerLinkActive="active" class="dashboard-nav__item">
+        <span class="dashboard-nav__icon" aria-hidden="true">⚙️</span>
+        Paramètres
+      </a>
+      <a routerLink="/admin/users/warehouse-managers" routerLinkActive="active" class="dashboard-nav__item">
+        <span class="dashboard-nav__icon" aria-hidden="true">👥</span>
+        Responsables d'entrepôt
+      </a>
+      <a routerLink="/admin/users/clients" routerLinkActive="active" class="dashboard-nav__item">
+        <span class="dashboard-nav__icon" aria-hidden="true">👤</span>
+        Clients
       </a>
     </nav>
   </aside>
 
-  <!-- Main Content -->
-  <div class="main-content">
-    <!-- Header -->
-    <header class="header">
-      <div class="header-left">
+  <div class="dashboard-main">
+    <header class="dashboard-header">
+      <div class="dashboard-header__left">
         <h1>Administration</h1>
       </div>
-      <div class="header-right">
-        <span class="user-info">
-          {{ authService.getCurrentUser()?.email || 'Non connecté' }}
-        </span>
-        <button (click)="authService.logout()" class="btn-logout">
-          Déconnexion
-        </button>
+      <div class="dashboard-header__right">
+        <span class="dashboard-header__user">{{ authService.getCurrentUser()?.email || 'Non connecté' }}</span>
+        <button type="button" class="dashboard-btn-logout" (click)="authService.logout()">Déconnexion</button>
       </div>
     </header>
 
-    <!-- Content -->
-    <main class="content">
+    <main class="dashboard-content">
       <router-outlet />
     </main>
 
-    <!-- Footer -->
-    <footer class="footer">
-      <p>&copy; 2026 LogiTrack - Tous droits réservés</p>
+    <footer class="dashboard-footer">
+      <p>&copy; 2026 LogiTrack — Tous droits réservés</p>
     </footer>
   </div>
 </div>
-

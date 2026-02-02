@@ -1,0 +1,13 @@
+.wm-wh { max-width: 600px; }
+.wm-wh__header { margin-bottom: 24px; }
+.wm-wh__title { margin: 0 0 8px; font-size: 24px; font-weight: 700; color: var(--color-text, #1a202c); }
+.wm-wh__desc { margin: 0; font-size: 14px; color: var(--color-text-secondary, #6b7280); line-height: 1.5; }
+.wm-wh__alert { padding: 20px; background: rgba(239, 68, 68, 0.1); border: 1px solid rgba(239, 68, 68, 0.3); border-radius: 12px; }
+.wm-wh__alert p { margin: 0; color: #b91c1c; }
+.wm-wh__alert a { color: var(--color-primary); text-decoration: underline; }
+.wm-wh__loading { padding: 32px; text-align: center; color: var(--color-text-secondary); }
+.wm-wh__card { padding: 24px; background: var(--color-bg-elevated, #f9fafb); border: 1px solid var(--color-border, #e5e7eb); border-radius: 12px; }
+.wm-wh__row { display: flex; gap: 16px; margin-bottom: 16px; }
+.wm-wh__row:last-child { margin-bottom: 0; }
+.wm-wh__label { font-weight: 600; min-width: 80px; color: var(--color-text-secondary); }
+.wm-wh__value { color: var(--color-text); }

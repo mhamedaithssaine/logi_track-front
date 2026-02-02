@@ -1,0 +1,78 @@
+<div class="carrier-list">
+  <header class="carrier-list__header">
+    <h1 class="carrier-list__title">Transporteurs</h1>
+    <p class="carrier-list__desc">Gérez les transporteurs (DHL, Chronopost, etc.) utilisés pour les expéditions.</p>
+    <button type="button" class="carrier-list__btn-add" (click)="openAdd()">+ Nouveau transporteur</button>
+  </header>
+
+  @if (showForm) {
+    <div class="carrier-list__form">
+      <h2>{{ editingId ? 'Modifier' : 'Nouveau' }} transporteur</h2>
+      <div class="carrier-list__form-row">
+        <label>Code</label>
+        <input type="text" [(ngModel)]="formCode" placeholder="ex. DHL" [readonly]="!!editingId" />
+        @if (editingId) {
+          <span class="carrier-list__form-hint">Le code ne peut pas être modifié.</span>
+        }
+      </div>
+      <div class="carrier-list__form-row">
+        <label>Nom</label>
+        <input type="text" [(ngModel)]="formName" placeholder="ex. DHL Express" />
+      </div>
+      <div class="carrier-list__form-row">
+        <label><input type="checkbox" [(ngModel)]="formActive" /> Actif</label>
+      </div>
+      <div class="carrier-list__form-actions">
+        <button type="button" class="carrier-list__btn-cancel" (click)="closeForm()">Annuler</button>
+        <button type="button" class="carrier-list__btn-submit" (click)="submit()" [disabled]="submitting">
+          {{ submitting ? '…' : (editingId ? 'Modifier' : 'Créer') }}
+        </button>
+      </div>
+    </div>
+  }
+
+  @if (isLoading) {
+    <p class="carrier-list__loading">Chargement…</p>
+  } @else {
+    <div class="carrier-list__table-wrap">
+      <table class="carrier-list__table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Code</th>
+            <th>Nom</th>
+            <th>Statut</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (c of carriers; track c.id) {
+            <tr>
+              <td>{{ c.id }}</td>
+              <td>{{ c.code }}</td>
+              <td>{{ c.name }}</td>
+              <td><span class="carrier-list__badge" [class.inactive]="!c.active">{{ c.active ? 'Actif' : 'Inactif' }}</span></td>
+              <td>
+                <button type="button" class="carrier-list__btn-edit" (click)="openEdit(c)" title="Modifier">✏️</button>
+                <button type="button" class="carrier-list__btn-delete" (click)="requestDelete(c)" title="Supprimer">🗑️</button>
+              </td>
+            </tr>
+          } @empty {
+            <tr><td colspan="5" class="carrier-list__empty">Aucun transporteur.</td></tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+
+  <app-confirm-dialog
+    [open]="deleteConfirmOpen"
+    title="Supprimer le transporteur"
+    [message]="deleteTarget ? 'Supprimer ' + deleteTarget.name + ' ?' : ''"
+    confirmLabel="Supprimer"
+    cancelLabel="Annuler"
+    type="danger"
+    (confirm)="onConfirmDelete()"
+    (cancel)="onCancelDelete()">
+  </app-confirm-dialog>
+</div>

@@ -1,0 +1,55 @@
+<div class="client-dashboard">
+  <section class="client-hero">
+    <h2>Espace Client</h2>
+    <p>Vue d’ensemble de vos commandes, catalogue et expéditions.</p>
+  </section>
+
+  @if (isLoading) {
+    <div class="client-dash-loading"><p>Chargement…</p></div>
+  } @else if (loadError) {
+    <div class="client-dash-error">
+      <p>{{ loadError }}</p>
+      <button type="button" class="client-dash-retry" (click)="loadKpis()">Réessayer</button>
+    </div>
+  }
+
+  @if (!isLoading && !loadError) {
+    <section class="client-kpis">
+      <h3>KPIs commandes</h3>
+      <div class="client-kpi-grid">
+        <div class="client-kpi-card"><span class="client-kpi-value">{{ counts['CREATED'] }}</span><span class="client-kpi-label">CREATED</span></div>
+        <div class="client-kpi-card"><span class="client-kpi-value">{{ counts['RESERVED'] }}</span><span class="client-kpi-label">RESERVED</span></div>
+        <div class="client-kpi-card"><span class="client-kpi-value">{{ counts['PARTIAL_RESERVED'] }}</span><span class="client-kpi-label">PARTIAL</span></div>
+        <div class="client-kpi-card"><span class="client-kpi-value">{{ counts['SHIPPED'] }}</span><span class="client-kpi-label">SHIPPED</span></div>
+        <div class="client-kpi-card"><span class="client-kpi-value">{{ counts['DELIVERED'] }}</span><span class="client-kpi-label">DELIVERED</span></div>
+        <div class="client-kpi-card"><span class="client-kpi-value">{{ counts['CANCELED'] }}</span><span class="client-kpi-label">CANCELED</span></div>
+      </div>
+    </section>
+
+    <section class="client-chart">
+      <h3>Commandes par statut</h3>
+      <div class="client-chart-container">
+        <canvas baseChart [type]="'doughnut'" [data]="doughnutChartData" [options]="doughnutChartOptions"></canvas>
+      </div>
+    </section>
+
+    <section class="client-alerts">
+      @if (ttlAlert) {
+        <div class="client-alert client-alert-ttl"><span>⏱</span> {{ ttlAlert }}</div>
+      }
+      @if (cutoffAlert) {
+        <div class="client-alert client-alert-cutoff"><span>🕒</span> {{ cutoffAlert }}</div>
+      }
+    </section>
+
+    <section class="client-actions">
+      <h3>Accès rapide</h3>
+      <div class="client-action-grid">
+        <a routerLink="/client/catalogue" class="client-action-tile"><span>📦</span> Catalogue</a>
+        <a routerLink="/client/orders" class="client-action-tile"><span>📋</span> Commandes</a>
+        <a routerLink="/client/orders/new" class="client-action-tile"><span>➕</span> Nouvelle commande</a>
+        <a routerLink="/client/shipments" class="client-action-tile"><span>🚢</span> Expéditions</a>
+      </div>
+    </section>
+  }
+</div>

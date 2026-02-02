@@ -51,7 +51,7 @@ import { toast } from '../../services/toast.service';
         </div>
 
         <div class="navigation">
-          <a routerLink="/auth/login" class="link">→ Aller à la page Login</a>
+          <a routerLink="/login" class="link">→ Aller à la page Login</a>
           <a routerLink="/auth/register" class="link">→ Aller à la page Register</a>
         </div>
       </div>

@@ -1,0 +1,107 @@
+<div class="wm-po">
+  <header class="wm-po__header">
+    <h1 class="wm-po__title">Commandes d'achat</h1>
+    <p class="wm-po__desc">Créez et suivez vos commandes d'achat auprès des fournisseurs de votre entrepôt. Enregistrez les réceptions lorsque les marchandises arrivent.</p>
+    <button type="button" class="wm-po__btn-create" (click)="openCreateForm()" [disabled]="!suppliers.length">Créer une commande d'achat</button>
+  </header>
+
+  @if (!suppliers.length && !isLoading) {
+    <div class="wm-po__alert">
+      <p>Aucun fournisseur associé à votre entrepôt. <a routerLink="/warehouse/suppliers">Vérifiez les fournisseurs</a> ou contactez l'administrateur.</p>
+    </div>
+  }
+
+  @if (showCreateForm) {
+    <section class="wm-po__form-card">
+      <h2 class="wm-po__form-title">Nouvelle commande d'achat</h2>
+      <div class="wm-po__form-row">
+        <label for="po-supplier">Fournisseur</label>
+        <select id="po-supplier" [(ngModel)]="createDto.supplierId" name="supplierId" class="wm-po__select">
+          @for (s of suppliers; track s.id) {
+            <option [value]="s.id">{{ s.name }}</option>
+          }
+        </select>
+      </div>
+      <div class="wm-po__lines">
+        <div class="wm-po__lines-header">
+          <span>Lignes</span>
+          <button type="button" class="wm-po__btn-add" (click)="addLine()">+ Ligne</button>
+        </div>
+        @for (line of createDto.lines; track $index; let i = $index) {
+          <div class="wm-po__line">
+            <select [(ngModel)]="line.productId" name="product{{i}}" class="wm-po__select">
+              @for (p of products; track p.id) {
+                <option [value]="p.id">{{ p.sku }} - {{ p.name }}</option>
+              }
+            </select>
+            <input type="number" min="1" [(ngModel)]="line.quantity" name="qty{{i}}" class="wm-po__input-qty" placeholder="Qté" />
+            <button type="button" class="wm-po__btn-remove" (click)="removeLine(i)" [disabled]="createDto.lines.length === 1" title="Supprimer la ligne">−</button>
+          </div>
+        }
+      </div>
+      <div class="wm-po__form-actions">
+        <button type="button" class="wm-po__btn-cancel" (click)="closeCreateForm()">Annuler</button>
+        <button type="button" class="wm-po__btn-submit" (click)="submitCreate()" [disabled]="creating">{{ creating ? 'Création…' : 'Créer' }}</button>
+      </div>
+    </section>
+  }
+
+  <section class="wm-po__list">
+    <h3 class="wm-po__list-title">Liste des commandes d'achat</h3>
+    @if (isLoading) {
+      <p class="wm-po__loading">Chargement…</p>
+    } @else if (purchaseOrders.length === 0) {
+      <p class="wm-po__empty">Aucune commande d'achat.</p>
+    } @else {
+      <div class="wm-po__table-wrap">
+        <table class="wm-po__table">
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Fournisseur</th>
+              <th>Statut</th>
+              <th>Lignes</th>
+              <th>Actions</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (po of purchaseOrders; track po.id) {
+              <tr>
+                <td>{{ po.id }}</td>
+                <td>{{ getSupplierName(po.supplierId) }}</td>
+                <td><span class="wm-po__badge" [class]="'wm-po__badge--' + (po.status || '').toLowerCase()">{{ po.status }}</span></td>
+                <td>{{ po.lines?.length ?? 0 }}</td>
+                <td>
+                  @if (canReceive(po)) {
+                    <button type="button" class="wm-po__btn-receive" (click)="openReceive(po)">Réceptionner</button>
+                  }
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+    }
+  </section>
+
+  @if (showReceiveForm && receivePo) {
+    <div class="wm-po__overlay" (click)="closeReceiveForm()"></div>
+    <div class="wm-po__modal">
+      <h2 class="wm-po__modal-title">Réceptionner la commande #{{ receivePo.id }}</h2>
+      <p class="wm-po__modal-desc">Saisissez les quantités reçues pour chaque ligne.</p>
+      <div class="wm-po__receive-lines">
+        @for (line of receivePo.lines; track $index; let i = $index) {
+          <div class="wm-po__receive-line">
+            <span class="wm-po__receive-name">{{ getLineProductName(line) }}</span>
+            <span class="wm-po__receive-max">/ {{ line.quantity ?? 0 }} commandés</span>
+            <input type="number" min="0" [max]="line.quantity ?? 0" [(ngModel)]="receiveQuantities[i]" name="recv{{i}}" class="wm-po__input-qty" />
+          </div>
+        }
+      </div>
+      <div class="wm-po__form-actions">
+        <button type="button" class="wm-po__btn-cancel" (click)="closeReceiveForm()">Annuler</button>
+        <button type="button" class="wm-po__btn-submit" (click)="submitReceive()" [disabled]="receiving">{{ receiving ? 'Enregistrement…' : 'Enregistrer la réception' }}</button>
+      </div>
+    </div>
+  }
+</div>

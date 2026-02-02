@@ -1,0 +1,25 @@
+<div class="wm-wh">
+  <header class="wm-wh__header">
+    <h1 class="wm-wh__title">Mon entrepôt</h1>
+    <p class="wm-wh__desc">L'entrepôt assigné à votre profil par l'administrateur. Création et modification réservées à l'admin.</p>
+  </header>
+
+  @if (noWarehouse) {
+    <div class="wm-wh__alert">
+      <p>Aucun entrepôt assigné. Contactez l'administrateur ou <a routerLink="/warehouse/profile">vérifiez votre profil</a>.</p>
+    </div>
+  } @else if (isLoading) {
+    <p class="wm-wh__loading">Chargement…</p>
+  } @else if (warehouse) {
+    <div class="wm-wh__card">
+      <div class="wm-wh__row">
+        <span class="wm-wh__label">Code</span>
+        <span class="wm-wh__value">{{ warehouse.code }}</span>
+      </div>
+      <div class="wm-wh__row">
+        <span class="wm-wh__label">Nom</span>
+        <span class="wm-wh__value">{{ warehouse.name }}</span>
+      </div>
+    </div>
+  }
+</div>

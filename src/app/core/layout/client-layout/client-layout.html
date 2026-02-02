@@ -1,0 +1,70 @@
+<div class="client-layout dashboard-layout">
+  <aside class="dashboard-sidebar">
+    <div class="dashboard-sidebar__header">
+      <h2 class="dashboard-sidebar__title">LogiTrack</h2>
+      <p class="dashboard-sidebar__subtitle">Espace Client</p>
+    </div>
+    <nav class="dashboard-sidebar__nav">
+      <a routerLink="/client/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="dashboard-nav__item">
+        <span class="dashboard-nav__icon" aria-hidden="true">📊</span>
+        Tableau de bord
+      </a>
+      <a routerLink="/client/catalogue" routerLinkActive="active" class="dashboard-nav__item">
+        <span class="dashboard-nav__icon" aria-hidden="true">📦</span>
+        Catalogue
+      </a>
+      <a routerLink="/client/orders" routerLinkActive="active" class="dashboard-nav__item">
+        <span class="dashboard-nav__icon" aria-hidden="true">📋</span>
+        Commandes
+      </a>
+      <a routerLink="/client/shipments" routerLinkActive="active" class="dashboard-nav__item">
+        <span class="dashboard-nav__icon" aria-hidden="true">🚢</span>
+        Expéditions
+      </a>
+    </nav>
+  </aside>
+
+  <div class="dashboard-main">
+    <header class="dashboard-header">
+      <div class="dashboard-header__left">
+        <h1>Espace Client</h1>
+      </div>
+      <div class="dashboard-header__right">
+        <button type="button" class="client-header__cart" (click)="openCart()" [attr.aria-label]="'Panier (' + cartService.count() + ')'" title="Ouvrir le panier">
+          <span class="client-header__cart-icon" aria-hidden="true">🛒</span>
+          @if (cartService.count() > 0) {
+            <span class="client-header__cart-badge">{{ cartService.count() }}</span>
+          }
+        </button>
+        <div class="client-header__user">
+          <button type="button" class="client-header__user-trigger" (click)="toggleUserMenu()" [attr.aria-expanded]="userMenuOpen()" aria-haspopup="true">
+            <span class="client-header__user-email">{{ authService.getCurrentUser()?.email ?? 'Compte' }}</span>
+            <span class="client-header__user-chevron" aria-hidden="true">▼</span>
+          </button>
+          @if (userMenuOpen()) {
+            <div class="client-header__dropdown">
+              <span class="client-header__dropdown-email">{{ authService.getCurrentUser()?.email }}</span>
+              <a routerLink="/client/dashboard" class="client-header__dropdown-item" (click)="closeUserMenu()">Mon espace</a>
+              <button type="button" class="client-header__dropdown-item client-header__dropdown-item--danger" (click)="logout()">Déconnexion</button>
+            </div>
+          }
+        </div>
+      </div>
+    </header>
+
+    <main class="dashboard-content">
+      <router-outlet />
+    </main>
+
+    <footer class="dashboard-footer">
+      <p>LogiTrack — Gestion logistique & commandes</p>
+    </footer>
+  </div>
+</div>
+
+<app-cart-sidebar
+  [open]="cartOpen()"
+  [items]="cartService.cartItems()"
+  (close)="closeCart()"
+  (remove)="cartService.remove($event)"
+/>

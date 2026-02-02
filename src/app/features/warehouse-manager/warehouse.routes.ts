@@ -54,53 +54,28 @@ export const routes: Routes = [
       {
         path: 'warehouses',
         loadComponent: () =>
-          import('../admin/warehouses/warehouse-list/warehouse-list').then((m) => m.WarehouseList),
-      },
-      {
-        path: 'warehouses/new',
-        loadComponent: () =>
-          import('../admin/warehouses/warehouse-form/warehouse-form').then((m) => m.WarehouseForm),
-      },
-      {
-        path: 'warehouses/:code/edit',
-        loadComponent: () =>
-          import('../admin/warehouses/warehouse-form/warehouse-form').then((m) => m.WarehouseForm),
+          import('./warehouse/wm-warehouse-view').then((m) => m.WmWarehouseView),
       },
       {
         path: 'inventory',
         loadComponent: () =>
-          import('./placeholder/placeholder').then((m) => m.WarehousePlaceholder),
-        data: {
-          title: 'Inventaire',
-          message: 'Gestion des niveaux et mouvements de stock. Bientôt disponible.',
-        },
+          import('./inventory/wm-inventory').then((m) => m.WmInventory),
+        data: { title: 'Inventaire' },
       },
       {
         path: 'purchase-orders',
         loadComponent: () =>
-          import('./placeholder/placeholder').then((m) => m.WarehousePlaceholder),
-        data: {
-          title: 'Commandes d\'achat',
-          message: 'Création et suivi des commandes d\'achat. Bientôt disponible.',
-        },
+          import('./purchase-orders/wm-purchase-order-list').then((m) => m.WmPurchaseOrderList),
       },
       {
         path: 'orders',
         loadComponent: () =>
-          import('./placeholder/placeholder').then((m) => m.WarehousePlaceholder),
-        data: {
-          title: 'Commandes',
-          message: 'Consultation des commandes clients. Bientôt disponible.',
-        },
+          import('./orders/wm-order-list').then((m) => m.WmOrderList),
       },
       {
         path: 'shipments',
         loadComponent: () =>
-          import('./placeholder/placeholder').then((m) => m.WarehousePlaceholder),
-        data: {
-          title: 'Expéditions',
-          message: 'Gestion des livraisons et suivi des expéditions. Bientôt disponible.',
-        },
+          import('./shipments/wm-shipment-list').then((m) => m.WmShipmentList),
       },
     ],
   },

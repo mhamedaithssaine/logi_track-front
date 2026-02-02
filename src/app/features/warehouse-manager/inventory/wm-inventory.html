@@ -1,0 +1,62 @@
+<div class="wm-inv">
+  <header class="wm-inv__header">
+    <h1 class="wm-inv__title">Inventaire</h1>
+    <p class="wm-inv__desc">Enregistrez les réceptions (INBOUND) pour créer ou augmenter le stock. Un produit sans inventaire dans un entrepôt ne peut pas être réservé.</p>
+  </header>
+
+  @if (noWarehouse) {
+    <div class="wm-inv__alert">
+      <p>Aucun entrepôt assigné à votre profil. Contactez l'administrateur ou <a routerLink="/warehouse/profile">vérifiez votre profil</a>.</p>
+    </div>
+  } @else if (isLoading) {
+    <p class="wm-inv__loading">Chargement…</p>
+  } @else {
+  <section class="wm-inv__form-card">
+    <h2 class="wm-inv__form-title">Nouvelle réception (INBOUND)</h2>
+    <form class="wm-inv__form" (ngSubmit)="submitInbound()">
+      <div class="wm-inv__row">
+        <label for="inv-product">Produit</label>
+        <select id="inv-product" [(ngModel)]="productId" name="productId" class="wm-inv__select" required>
+          <option [ngValue]="null" disabled>Selectionnez un produit</option>
+          @for (p of products; track p.sku) {
+            <option [ngValue]="p.id">{{ p.sku }} - {{ p.name }}</option>
+          }
+        </select>
+      </div>
+      <div class="wm-inv__row">
+        <label for="inv-warehouse">Entrepôt</label>
+        <select id="inv-warehouse" [(ngModel)]="warehouseId" name="warehouseId" class="wm-inv__select" required>
+          <option [ngValue]="null" disabled>Sélectionnez un entrepôt</option>
+          @for (w of warehouses; track w.code) {
+            <option [ngValue]="w.id">{{ w.code }} - {{ w.name }}</option>
+          }
+        </select>
+      </div>
+      <div class="wm-inv__row">
+        <label for="inv-qty">Quantité</label>
+        <input id="inv-qty" type="number" min="1" [(ngModel)]="quantity" name="quantity" class="wm-inv__input" required />
+      </div>
+      <div class="wm-inv__row">
+        <label for="inv-ref">Référence document (optionnel)</label>
+        <input id="inv-ref" type="text" [(ngModel)]="referenceDoc" name="referenceDoc" class="wm-inv__input" placeholder="Ex: BL-2024-001" />
+      </div>
+      <div class="wm-inv__actions">
+        <button type="submit" class="wm-inv__btn-submit" [disabled]="submitting || isLoading">
+          {{ submitting ? 'Enregistrement...' : 'Enregistrer la réception' }}
+        </button>
+      </div>
+    </form>
+  </section>
+
+  <section class="wm-inv__help">
+    <h3>Comment faire ?</h3>
+    <ol>
+      <li>Sélectionnez le produit (ex: NEW-1).</li>
+      <li>L'entrepôt correspond à votre affectation.</li>
+      <li>Saisissez la quantité reçue.</li>
+      <li>Cliquez sur « Enregistrer la réception ».</li>
+    </ol>
+    <p>Après cela, vous pourrez réserver les commandes contenant ce produit dans cet entrepôt.</p>
+  </section>
+  }
+</div>

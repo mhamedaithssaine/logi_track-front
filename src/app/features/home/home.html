@@ -1,0 +1,82 @@
+<div class="home">
+  <!-- Hero : style grande plateforme -->
+  <header class="home__hero">
+    <div class="home__hero-bg" aria-hidden="true"></div>
+    <span class="home__badge">Catalogue public</span>
+    <h1 class="home__title">Bienvenue sur LogiTrack</h1>
+    <p class="home__subtitle">
+      Parcourez le catalogue, réservez vos produits et validez vos commandes depuis votre espace client.
+    </p>
+  </header>
+
+  @if (authService.isAuthenticated() && isClient) {
+    <div class="home__cta-banner">
+      <p class="home__cta-text">Vous êtes connecté. Accédez à votre espace pour voir vos statistiques, commandes et expéditions.</p>
+      <a routerLink="/client/dashboard" class="home__cta-btn">Mon espace</a>
+    </div>
+  }
+
+  <!-- Filtres par catégorie : pills modernes -->
+  <section class="home__section">
+    <h2 class="home__section-title">Catalogue</h2>
+    <p class="home__section-desc">Choisissez une catégorie pour filtrer les produits.</p>
+    <div class="home__pills" role="group" aria-label="Filtrer par catégorie">
+      <button
+        type="button"
+        class="home__pill"
+        [class.home__pill--active]="!selectedCategory"
+        (click)="selectCategory('')"
+      >
+        Toutes
+      </button>
+      @for (c of categories; track c) {
+        <button
+          type="button"
+          class="home__pill"
+          [class.home__pill--active]="selectedCategory === c"
+          (click)="selectCategory(c)"
+        >
+          {{ c }}
+        </button>
+      }
+    </div>
+  </section>
+
+  @if (isLoading) {
+    <section class="home__section home__section--loading">
+      <div class="home__skeleton-grid">
+        @for (i of [1,2,3,4,5,6]; track i) {
+          <div class="home__skeleton-card">
+            <div class="home__skeleton home__skeleton--media"></div>
+            <div class="home__skeleton home__skeleton--line" style="width: 60%"></div>
+            <div class="home__skeleton home__skeleton--line" style="width: 80%"></div>
+            <div class="home__skeleton home__skeleton--line" style="width: 40%"></div>
+          </div>
+        }
+      </div>
+      <p class="home__loading-text">Chargement du catalogue…</p>
+    </section>
+  } @else if (loadError) {
+    <section class="home__section">
+      <div class="home__error">
+        <p class="home__error-text">{{ loadError }}</p>
+        <button type="button" class="home__btn-retry" (click)="load()">Réessayer</button>
+      </div>
+    </section>
+  } @else {
+    <section class="home__section">
+      <div class="home__grid">
+        @for (p of products; track p.sku) {
+          <app-product-card
+            [product]="p"
+            [quantity]="getQty(p.sku)"
+            (quantityChange)="setQty(p.sku, $event)"
+            (reserve)="reserve($event)"
+          />
+        } @empty {
+          <p class="home__empty">Aucun produit dans cette catégorie.</p>
+        }
+      </div>
+    </section>
+  }
+</div>

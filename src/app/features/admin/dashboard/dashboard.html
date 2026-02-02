@@ -1,0 +1,27 @@
+<div class="dashboard">
+  <h2>Tableau de bord</h2>
+  @if (isLoading) {
+    <p class="dashboard__loading">Chargement des statistiques…</p>
+  } @else if (loadError) {
+    <p class="dashboard__error">{{ loadError }}</p>
+  } @else {
+    <div class="stats-grid">
+      <div class="stat-card"><h3>Produits</h3><p class="stat-value">{{ productsCount }}</p></div>
+      <div class="stat-card"><h3>Fournisseurs</h3><p class="stat-value">{{ suppliersCount }}</p></div>
+      <div class="stat-card"><h3>Entrepôts</h3><p class="stat-value">{{ warehousesCount }}</p></div>
+      <div class="stat-card"><h3>Commandes</h3><p class="stat-value">{{ ordersCount }}</p></div>
+      <div class="stat-card"><h3>Expéditions</h3><p class="stat-value">{{ shipmentsCount }}</p></div>
+      <div class="stat-card"><h3>Commandes d'achat</h3><p class="stat-value">{{ purchaseOrdersCount }}</p></div>
+    </div>
+    <div class="charts-grid">
+      <div class="chart-card">
+        <h3>Entités (Produits, Fournisseurs, Entrepôts, Commandes)</h3>
+        <div class="chart-container"><canvas baseChart [type]="'bar'" [data]="barChartData" [options]="barChartOptions"></canvas></div>
+      </div>
+      <div class="chart-card">
+        <h3>Commandes par statut</h3>
+        <div class="chart-container"><canvas baseChart [type]="'doughnut'" [data]="doughnutChartData" [options]="doughnutChartOptions"></canvas></div>
+      </div>
+    </div>
+  }
+</div>

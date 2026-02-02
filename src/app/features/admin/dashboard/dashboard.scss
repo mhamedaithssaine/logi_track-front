@@ -1,0 +1,11 @@
+.dashboard { width: 100%; max-width: 100%; margin: 0; padding: 0; }
+.dashboard h2 { margin: 0 0 32px 0; color: var(--color-text); font-size: 28px; font-weight: 600; }
+.dashboard__loading, .dashboard__error { padding: 24px; color: var(--color-text-secondary); }
+.stats-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 24px; margin-bottom: 32px; }
+.stat-card { background: var(--color-bg-elevated); padding: 24px; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); border: 1px solid var(--color-border); }
+.stat-card h3 { margin: 0 0 12px; color: var(--color-text-secondary); font-size: 13px; font-weight: 600; text-transform: uppercase; }
+.stat-value { margin: 0; font-size: 32px; font-weight: 700; color: var(--color-text); }
+.charts-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); gap: 24px; }
+.chart-card { background: var(--color-bg-elevated); padding: 24px; border-radius: var(--radius-lg); box-shadow: var(--shadow-sm); border: 1px solid var(--color-border); }
+.chart-card h3 { margin: 0 0 16px; font-size: 16px; font-weight: 600; color: var(--color-text); }
+.chart-container { position: relative; height: 280px; }

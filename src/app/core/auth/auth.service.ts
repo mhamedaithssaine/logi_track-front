@@ -122,8 +122,8 @@ export class AuthService {
     this.currentUserSubject.next(null);
     this.isAuthenticatedSubject.next(false);
 
-    // Rediriger vers la page de login
-    this.router.navigate(['/auth/login']);
+    // Rediriger vers la page d'accueil (style plateforme)
+    this.router.navigate(['/']);
   }
 
   /**
@@ -182,6 +182,16 @@ export class AuthService {
   // ========== Méthodes privées ==========
 
   /**
+   * Normaliser le rôle (backend peut envoyer "ADMIN" ou "ROLE_ADMIN")
+   */
+  private normalizeRole(role: string | undefined): 'ADMIN' | 'WAREHOUSE_MANAGER' | 'CLIENT' {
+    if (!role || typeof role !== 'string') return 'CLIENT';
+    const r = role.replace(/^ROLE_/i, '').toUpperCase();
+    if (r === 'ADMIN' || r === 'WAREHOUSE_MANAGER' || r === 'CLIENT') return r;
+    return 'CLIENT';
+  }
+
+  /**
    * Gérer le succès de l'authentification
    */
   private handleAuthSuccess(response: AuthResponse): void {
@@ -189,11 +199,11 @@ export class AuthService {
     this.setAccessToken(response.accessToken);
     this.setRefreshToken(response.refreshToken);
 
-    // Créer l'objet User
+    // Créer l'objet User avec rôle normalisé
     const user: User = {
       id: response.userId,
       email: response.email,
-      role: response.role,
+      role: this.normalizeRole(response.role),
     };
 
     // Stocker l'utilisateur
@@ -236,7 +246,12 @@ export class AuthService {
 
     if (userStr && accessToken) {
       try {
-        const user: User = JSON.parse(userStr);
+        const parsed = JSON.parse(userStr);
+        const user: User = {
+          id: parsed.id,
+          email: parsed.email,
+          role: this.normalizeRole(parsed.role),
+        };
         this.currentUserSubject.next(user);
         this.isAuthenticatedSubject.next(true);
       } catch (error) {
@@ -244,6 +259,16 @@ export class AuthService {
         this.clearStorage();
       }
     }
+  }
+
+  /**
+   * S'assurer que l'utilisateur est chargé (pour les guards après login)
+   * Si token présent mais user null, recharge depuis le stockage.
+   */
+  ensureUserLoaded(): void {
+    if (this.getCurrentUser() != null) return;
+    if (!this.getAccessToken()) return;
+    this.loadUserFromStorage();
   }
 
   /**

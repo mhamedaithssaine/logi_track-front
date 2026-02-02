@@ -55,6 +55,10 @@ export const routes: Routes = [
         loadComponent: () => import('./warehouses/warehouse-form/warehouse-form').then((m) => m.WarehouseForm),
       },
       {
+        path: 'orders',
+        loadComponent: () => import('./orders/admin-order-list').then((m) => m.AdminOrderList),
+      },
+      {
         path: 'users',
         redirectTo: 'users/warehouse-managers',
         pathMatch: 'full',
@@ -85,6 +89,25 @@ export const routes: Routes = [
       {
         path: 'users/clients/:id/edit',
         loadComponent: () => import('./users/clients/client-form').then((m) => m.ClientForm),
+      },
+      {
+        path: 'purchase-orders',
+        loadComponent: () =>
+          import('./purchase-orders/admin-purchase-order-list').then((m) => m.AdminPurchaseOrderList),
+      },
+      {
+        path: 'carriers',
+        loadComponent: () => import('./carriers/carrier-list').then((m) => m.CarrierList),
+      },
+      {
+        path: 'reporting',
+        loadComponent: () =>
+          import('./reporting/admin-reporting').then((m) => m.AdminReporting),
+      },
+      {
+        path: 'settings',
+        loadComponent: () =>
+          import('./settings/admin-settings').then((m) => m.AdminSettings),
       },
     ],
   },

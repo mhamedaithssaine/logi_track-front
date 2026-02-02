@@ -1,0 +1,20 @@
+<div class="catalogue-detail">
+  <a routerLink="/client/catalogue" class="catalogue-back">← Catalogue</a>
+
+  @if (isLoading) {
+    <div class="catalogue-loading"><p>Chargement…</p></div>
+  } @else if (loadError) {
+    <div class="catalogue-error"><p>{{ loadError }}</p></div>
+  } @else if (product) {
+    <div class="catalogue-detail-card">
+      <h2>{{ product.name }}</h2>
+      <div class="catalogue-detail-meta">
+        <span class="catalogue-detail-sku">SKU {{ product.sku }}</span>
+        <span class="catalogue-detail-cat">{{ product.category }}</span>
+        <span class="catalogue-detail-badge" [class.active]="product.active">{{ product.active ? 'Actif' : 'Inactif' }}</span>
+      </div>
+      <p class="catalogue-detail-price">{{ product.price | number:'1.2-2' }} €</p>
+      <p class="catalogue-detail-avail">Disponibilité : selon stock (non exposée côté client).</p>
+    </div>
+  }
+</div>

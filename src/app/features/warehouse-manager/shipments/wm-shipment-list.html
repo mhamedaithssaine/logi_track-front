@@ -1,0 +1,95 @@
+<div class="wm-shipments">
+  <header class="wm-shipments__header">
+    <h1 class="wm-shipments__title">Expéditions</h1>
+    <p class="wm-shipments__desc">Créer une expédition pour une commande réservée et mettre à jour les statuts (PLANNED → IN_TRANSIT → DELIVERED).</p>
+    <button type="button" class="wm-shipments__btn-create" (click)="openCreateForm()" [disabled]="reservedOrders.length === 0">
+      Créer une expédition
+    </button>
+  </header>
+
+  @if (showCreateForm) {
+    <div class="wm-shipments__form-card">
+      <h2 class="wm-shipments__form-title">Nouvelle expédition</h2>
+      <div class="wm-shipments__form-row">
+        <label for="create-order">Commande (RESERVED)</label>
+        <select id="create-order" [(ngModel)]="createOrderId" class="wm-shipments__select">
+          @for (o of reservedOrders; track o.id) {
+            <option [value]="o.id">Commande #{{ o.id }}</option>
+          }
+        </select>
+      </div>
+      <div class="wm-shipments__form-row">
+        <label for="create-carrier">Transporteur</label>
+        <select id="create-carrier" [(ngModel)]="createCarrierCode" class="wm-shipments__select" name="createCarrier">
+          <option value="">Sélectionnez un transporteur</option>
+          @for (c of carriers; track c.id) {
+            <option [value]="c.code">{{ c.name }} ({{ c.code }})</option>
+          }
+        </select>
+      </div>
+      <div class="wm-shipments__form-row">
+        <label for="create-tracking">Numéro de suivi</label>
+        <input id="create-tracking" type="text" [(ngModel)]="createTrackingNumber" class="wm-shipments__input" placeholder="ex. 1234567890" />
+      </div>
+      <div class="wm-shipments__form-actions">
+        <button type="button" class="wm-shipments__btn-cancel" (click)="closeCreateForm()">Annuler</button>
+        <button type="button" class="wm-shipments__btn-submit" (click)="submitCreate()" [disabled]="creating || !createCarrierCode.trim() || !createTrackingNumber.trim()">
+          {{ creating ? 'Création…' : 'Créer' }}
+        </button>
+      </div>
+    </div>
+  }
+
+  @if (isLoading) {
+    <p class="wm-shipments__loading">Chargement…</p>
+  } @else if (loadError) {
+    <div class="wm-shipments__error">
+      <p>{{ loadError }}</p>
+      <button type="button" class="wm-shipments__btn-retry" (click)="loadWarehouseThenData()">Réessayer</button>
+    </div>
+  } @else {
+    <div class="wm-shipments__table-wrap">
+      <table class="wm-shipments__table">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Commande</th>
+            <th>Transporteur</th>
+            <th>Suivi</th>
+            <th>Statut</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (s of shipments; track s.shipmentId) {
+            <tr>
+              <td>{{ s.shipmentId }}</td>
+              <td><a [routerLink]="['/warehouse/orders']" [queryParams]="{ highlight: s.orderId }">{{ s.orderId }}</a></td>
+              <td>{{ s.carrier }}</td>
+              <td>{{ s.trackingNumber }}</td>
+              <td><span class="wm-shipments__status" [attr.data-status]="s.status">{{ s.status }}</span></td>
+              <td>
+                @if (s.status !== 'DELIVERED') {
+                  <select class="wm-shipments__status-select" [value]="s.status" (change)="updateStatus(s, $any($event.target).value)" [disabled]="isUpdating(s)">
+                    @for (st of statuses; track st) {
+                      <option [value]="st" [selected]="s.status === st">{{ st }}</option>
+                    }
+                  </select>
+                  @if (isUpdating(s)) {
+                    <span class="wm-shipments__updating">…</span>
+                  }
+                } @else {
+                  <span>—</span>
+                }
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="6" class="wm-shipments__empty">Aucune expédition.</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

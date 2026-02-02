@@ -1,0 +1,57 @@
+<div class="home-layout">
+  <header class="home-navbar">
+    <div class="home-navbar__inner">
+      <a routerLink="/" class="home-navbar__brand">
+        <span class="home-navbar__logo" aria-hidden="true">📦</span>
+        <span class="home-navbar__name">LogiTrack</span>
+      </a>
+
+      <div class="home-navbar__actions">
+        @if (authService.isAuthenticated() && isClient()) {
+          <a routerLink="/client/dashboard" class="home-navbar__cta">
+            Mon espace — Statistiques, commandes, expéditions
+          </a>
+          <button type="button" class="home-navbar__cart" (click)="openCart()" [attr.aria-label]="'Panier (' + cartService.count() + ')'">
+            <span class="home-navbar__cart-icon">🛒</span>
+            @if (cartService.count() > 0) {
+              <span class="home-navbar__cart-badge">{{ cartService.count() }}</span>
+            }
+          </button>
+          <div class="home-navbar__user">
+            <button type="button" class="home-navbar__user-trigger" (click)="toggleUserMenu()" aria-expanded="userMenuOpen()">
+              <span class="home-navbar__user-email">{{ authService.getCurrentUser()?.email }}</span>
+              <span class="home-navbar__user-chevron">▼</span>
+            </button>
+            @if (userMenuOpen()) {
+              <div class="home-navbar__dropdown">
+                <span class="home-navbar__dropdown-email">{{ authService.getCurrentUser()?.email }}</span>
+                <a routerLink="/client/dashboard" class="home-navbar__dropdown-item" (click)="userMenuOpen.set(false)">Mon espace</a>
+                <button type="button" class="home-navbar__dropdown-item home-navbar__dropdown-item--danger" (click)="logout()">Déconnexion</button>
+              </div>
+            }
+          </div>
+        } @else {
+          <a routerLink="/login" [queryParams]="{ returnUrl: '/' }" class="home-navbar__btn-login">Connexion</a>
+          <a routerLink="/auth/register" class="home-navbar__btn-register">Créer un compte</a>
+        }
+      </div>
+    </div>
+  </header>
+
+  <main class="home-layout__main">
+    <router-outlet />
+  </main>
+
+  <footer class="home-layout__footer">
+    <p>LogiTrack — Gestion logistique & commandes</p>
+  </footer>
+
+  @if (authService.isAuthenticated() && isClient()) {
+    <app-cart-sidebar
+      [open]="cartOpen()"
+      [items]="cartService.cartItems()"
+      (close)="closeCart()"
+      (remove)="cartService.remove($event)"
+    />
+  }
+</div>

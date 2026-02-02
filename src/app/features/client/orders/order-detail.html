@@ -1,0 +1,45 @@
+<div class="order-detail">
+  <a routerLink="/client/orders" class="order-back">Retour commandes</a>
+  @if (isLoading) {
+    <div class="order-loading"><p>Chargement...</p></div>
+  } @else if (loadError) {
+    <div class="order-error"><p>{{ loadError }}</p></div>
+  } @else if (order) {
+    <div class="order-detail-card">
+      <h2>Commande #{{ order.id }}</h2>
+      <p><strong>Statut</strong> {{ order.status }} | <strong>Entrepôt</strong> {{ order.warehouseName || 'Non assigné' }}</p>
+      <p class="order-date">{{ order.createdAt | date:'medium' }}</p>
+      <h3>Lignes</h3>
+      <div class="order-table-wrap">
+        <table class="order-table">
+          <thead>
+            <tr><th>SKU</th><th>Produit</th><th>Qte</th><th>Backorder</th><th>Prix</th></tr>
+          </thead>
+          <tbody>
+            @for (l of order.lines; track l.sku) {
+              <tr>
+                <td>{{ l.sku }}</td>
+                <td>{{ l.productName }}</td>
+                <td>{{ l.quantity }}</td>
+                <td>{{ l.backorderQty ?? 0 }}</td>
+                <td>{{ l.price | number:'1.2-2' }} EUR</td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      </div>
+      <div class="order-detail-actions">
+        @if (order.status === 'CREATED') {
+          <button type="button" (click)="reserve()" [disabled]="reserveLoading" class="order-btn-reserve">
+            {{ reserveLoading ? 'Réservation…' : 'Demander réservation' }}
+          </button>
+        }
+        @if (canCancel()) {
+          <button type="button" (click)="cancel()" [disabled]="cancelLoading" class="order-btn-cancel">
+            {{ cancelLoading ? '…' : 'Annuler la commande' }}
+          </button>
+        }
+      </div>
+    </div>
+  }
+</div>

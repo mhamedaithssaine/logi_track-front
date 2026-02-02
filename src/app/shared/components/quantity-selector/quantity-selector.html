@@ -1,0 +1,5 @@
+<div class="qty-selector">
+  <button type="button" class="qty-btn" [disabled]="quantity() <= min()" (click)="change(-1)" aria-label="Diminuer">−</button>
+  <span class="qty-value">{{ quantity() }}</span>
+  <button type="button" class="qty-btn" [disabled]="quantity() >= max()" (click)="change(1)" aria-label="Augmenter">+</button>
+</div>

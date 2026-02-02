@@ -88,7 +88,7 @@ export class Register {
         
         // Rediriger vers la page de connexion après 2 secondes
         setTimeout(() => {
-          this.router.navigate(['/auth/login'], {
+          this.router.navigate(['/login'], {
             queryParams: { registered: true },
           });
         }, 2000);

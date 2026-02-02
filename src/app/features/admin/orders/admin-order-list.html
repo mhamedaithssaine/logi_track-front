@@ -1,0 +1,100 @@
+<div class="admin-order-list">
+  <div class="page-header">
+    <h2>Commandes</h2>
+    <p class="subtitle">Confirmez les commandes pour les rendre visibles aux responsables d'entrepôt.</p>
+  </div>
+
+  <div class="toolbar">
+    <div class="filters">
+      <label for="status">Statut</label>
+      <select id="status" [(ngModel)]="statusFilter" (change)="applyFilters()" class="select">
+        <option value="">Tous</option>
+        @for (s of statuses; track s) {
+          <option [value]="s">{{ s }}</option>
+        }
+      </select>
+    </div>
+    <button type="button" class="btn btn-primary" (click)="applyFilters()">Filtrer</button>
+  </div>
+
+  @if (isLoading) {
+    <div class="loading">
+      <p>Chargement des commandes…</p>
+    </div>
+  } @else if (loadError) {
+    <div class="load-error">
+      <p>{{ loadError }}</p>
+      <button type="button" class="btn btn-primary" (click)="load()">Réessayer</button>
+    </div>
+  } @else {
+    <div class="table-container">
+      <table class="orders-table">
+        <thead>
+          <tr>
+            <th>Id</th>
+            <th>Client</th>
+            <th>Entrepôt</th>
+            <th>Statut</th>
+            <th>Créée le</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (o of orders; track o.id) {
+            <tr>
+              <td><span class="mono">#{{ o.id }}</span></td>
+              <td>Client #{{ o.clientId }}</td>
+              <td>
+                @if (o.warehouseName) {
+                  {{ o.warehouseName }}
+                } @else {
+                  <span class="unassigned">Non assigné</span>
+                }
+              </td>
+              <td><span class="badge" [class]="'badge-' + (o.status | lowercase)">{{ o.status }}</span></td>
+              <td>{{ formatDate(o.createdAt) }}</td>
+              <td class="actions">
+                @if (canAssignWarehouse(o)) {
+                  <div class="assign-row">
+                    <select class="select select-sm" [ngModel]="selectedWarehouseByOrderId[o.id]" (ngModelChange)="selectedWarehouseByOrderId[o.id] = $event">
+                      <option [ngValue]="null">Choisir entrepôt</option>
+                      @for (w of warehouses; track w.id) {
+                        <option [ngValue]="w.id">{{ w.name }} ({{ w.code }})</option>
+                      }
+                    </select>
+                    <button type="button" class="btn btn-assign" [disabled]="assigningId === o.id || !selectedWarehouseByOrderId[o.id]" (click)="assignWarehouse(o.id)">
+                      {{ assigningId === o.id ? '…' : 'Assigner' }}
+                    </button>
+                  </div>
+                } @else if (o.status === 'CREATED') {
+                  <button
+                    type="button"
+                    class="btn btn-confirm"
+                    [disabled]="confirmingId === o.id"
+                    (click)="confirm(o.id)"
+                  >
+                    {{ confirmingId === o.id ? '…' : 'Confirmer' }}
+                  </button>
+                } @else {
+                  <span class="muted">–</span>
+                }
+              </td>
+            </tr>
+          } @empty {
+            <tr>
+              <td colspan="6" class="empty">Aucune commande</td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+
+    @if (totalPages > 1) {
+      <div class="pagination">
+        <button type="button" class="btn btn-sm" [disabled]="page === 0" (click)="goPage(page - 1)">Préc.</button>
+        <span class="page-info">Page {{ page + 1 }} / {{ totalPages }} ({{ totalElements }} au total)</span>
+        <button type="button" class="btn btn-sm" [disabled]="page >= totalPages - 1" (click)="goPage(page + 1)">Suiv.</button>
+      </div>
+    }
+  }
+</div>

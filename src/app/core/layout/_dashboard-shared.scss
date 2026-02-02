@@ -1,0 +1,211 @@
+/* ========== LAYOUT DASHBOARD PARTAGÉ ==========
+   Admin, Warehouse, Client — structure et style unifiés
+   ================================================ */
+
+.dashboard-layout {
+  display: flex;
+  min-height: 100vh;
+  width: 100%;
+  background: var(--color-bg);
+  overflow-x: hidden;
+  font-family: var(--font-sans);
+}
+
+/* ----- Sidebar ----- */
+.dashboard-sidebar {
+  width: var(--layout-sidebar-width);
+  min-width: var(--layout-sidebar-width);
+  background: var(--layout-sidebar-bg);
+  color: var(--layout-sidebar-text);
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  z-index: 1000;
+  border-right: 1px solid var(--layout-sidebar-border);
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+.dashboard-sidebar__header {
+  padding: var(--space-6) var(--space-5);
+  border-bottom: 1px solid var(--layout-sidebar-border);
+  flex-shrink: 0;
+}
+
+.dashboard-sidebar__title {
+  margin: 0;
+  font-size: var(--text-xl);
+  font-weight: var(--font-bold);
+  color: #fff;
+  letter-spacing: -0.02em;
+  line-height: 1.25;
+}
+
+.dashboard-sidebar__subtitle {
+  margin: var(--space-2) 0 0;
+  font-size: var(--text-sm);
+  color: var(--layout-sidebar-text-muted);
+  font-weight: var(--font-medium);
+}
+
+.dashboard-sidebar__nav {
+  flex: 1;
+  padding: var(--space-4) 0;
+  overflow-y: auto;
+}
+
+.dashboard-nav__item {
+  display: flex;
+  align-items: center;
+  gap: var(--space-3);
+  padding: var(--space-3) var(--space-5);
+  margin: 0 var(--space-2) var(--space-1);
+  color: var(--layout-sidebar-text);
+  text-decoration: none;
+  font-size: var(--text-sm);
+  font-weight: var(--font-medium);
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background var(--transition-fast), color var(--transition-fast);
+
+  &:hover {
+    background: var(--layout-sidebar-hover);
+    color: #fff;
+  }
+
+  &.active {
+    background: var(--color-primary);
+    color: #fff;
+    box-shadow: var(--shadow-sm);
+  }
+
+  .dashboard-nav__icon {
+    font-size: 1.125rem;
+    width: 20px;
+    text-align: center;
+    flex-shrink: 0;
+    opacity: 0.9;
+  }
+}
+
+/* ----- Main ----- */
+.dashboard-main {
+  flex: 1;
+  margin-left: var(--layout-sidebar-width);
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.dashboard-header {
+  height: var(--layout-header-height);
+  min-height: var(--layout-header-height);
+  padding: 0 var(--space-8);
+  background: var(--color-bg-elevated);
+  border-bottom: 1px solid var(--color-border);
+  box-shadow: var(--shadow-sm);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+
+.dashboard-header__left h1 {
+  margin: 0;
+  font-size: var(--text-xl);
+  font-weight: var(--font-semibold);
+  color: var(--color-text);
+  letter-spacing: -0.01em;
+}
+
+.dashboard-header__right {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+}
+
+.dashboard-header__user {
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  font-weight: var(--font-medium);
+}
+
+.dashboard-btn-logout {
+  padding: var(--space-2) var(--space-5);
+  font-size: var(--text-sm);
+  font-weight: var(--font-semibold);
+  color: #fff;
+  background: var(--color-error);
+  border: none;
+  border-radius: var(--radius-md);
+  cursor: pointer;
+  transition: background var(--transition-fast);
+
+  &:hover {
+    background: #dc2626;
+  }
+}
+
+.dashboard-content {
+  flex: 1;
+  padding: var(--space-8);
+  max-width: var(--layout-content-max-width);
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+  overflow-x: hidden;
+}
+
+.dashboard-footer {
+  padding: var(--space-5) var(--space-8);
+  text-align: center;
+  font-size: var(--text-sm);
+  color: var(--color-text-secondary);
+  border-top: 1px solid var(--color-border);
+  background: var(--color-bg-elevated);
+
+  p {
+    margin: 0;
+  }
+}
+
+/* ----- Responsive ----- */
+@media (max-width: 1024px) {
+  .dashboard-sidebar {
+    width: 240px;
+    min-width: 240px;
+  }
+  .dashboard-main {
+    margin-left: 240px;
+  }
+  .dashboard-content {
+    padding: var(--space-6);
+  }
+}
+
+@media (max-width: 768px) {
+  .dashboard-sidebar {
+    width: 220px;
+    min-width: 220px;
+  }
+  .dashboard-main {
+    margin-left: 220px;
+  }
+  .dashboard-header {
+    padding: 0 var(--space-5);
+    height: 56px;
+    min-height: 56px;
+  }
+  .dashboard-content {
+    padding: var(--space-5) var(--space-4);
+  }
+  .dashboard-footer {
+    padding: var(--space-4) var(--space-5);
+  }
+}

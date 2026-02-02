@@ -1,6 +1,7 @@
 import { Routes } from '@angular/router';
 import { authGuard } from './core/guards/auth-guard';
 import { roleGuard } from './core/guards/role-guard';
+import { HomeLayout } from './core/layout/home-layout/home-layout';
 
 export const routes: Routes = [
   {
@@ -8,13 +9,15 @@ export const routes: Routes = [
     loadComponent: () => import('./shared/components/toast-demo/toast-demo').then((m) => m.ToastDemoComponent),
   },
 
+  // Un seul formulaire de connexion pour toute l'app → /login
+  {
+    path: 'login',
+    loadComponent: () => import('./features/auth/login/login').then((m) => m.Login),
+  },
   {
     path: 'auth',
     children: [
-      {
-        path: 'login',
-        loadComponent: () => import('./features/auth/login/login').then((m) => m.Login),
-      },
+      { path: 'login', redirectTo: '/login', pathMatch: 'full' },
       {
         path: 'register',
         loadComponent: () => import('./features/auth/register/register').then((m) => m.Register),
@@ -40,8 +43,13 @@ export const routes: Routes = [
 
   {
     path: '',
-    redirectTo: '/auth/login',
-    pathMatch: 'full',
+    component: HomeLayout,
+    children: [
+      {
+        path: '',
+        loadComponent: () => import('./features/home/home').then((m) => m.Home),
+      },
+    ],
   },
 
   // Route 403 - Unauthorized

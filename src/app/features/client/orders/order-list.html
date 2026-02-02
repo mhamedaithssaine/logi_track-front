@@ -1,0 +1,52 @@
+<div class="order-list">
+  <div class="order-header">
+    <h2>Commandes</h2>
+    <a routerLink="/client/orders/new" class="order-btn-primary">+ Nouvelle commande</a>
+  </div>
+
+  <div class="order-filters">
+    <input type="text" [(ngModel)]="statusFilter" placeholder="Statut (CREATED, RESERVED...)" (keyup.enter)="applyFilters()" class="order-input" />
+    <button type="button" (click)="applyFilters()" class="order-btn">Filtrer</button>
+  </div>
+
+  @if (isLoading) {
+    <div class="order-loading"><p>Chargement...</p></div>
+  } @else if (loadError) {
+    <div class="order-error"><p>{{ loadError }}</p><button type="button" class="order-retry" (click)="load()">Reessayer</button></div>
+  } @else {
+    <div class="order-table-wrap">
+      <table class="order-table">
+        <thead>
+          <tr><th>ID</th><th>Statut</th><th>Entrepot</th><th>Date</th><th>Actions</th></tr>
+        </thead>
+        <tbody>
+          @for (o of orders; track o.id) {
+            <tr>
+              <td>{{ o.id }}</td>
+              <td><span class="order-badge status-badge">{{ o.status }}</span></td>
+              <td>{{ o.warehouseName || 'Non assigné' }}</td>
+              <td>{{ o.createdAt | date:'short' }}</td>
+              <td class="order-actions">
+                <a [routerLink]="['/client/orders', o.id]">Détail</a>
+                @if (canCancel(o)) {
+                  <button type="button" class="order-btn-cancel" [disabled]="cancelingId === o.id" (click)="cancel(o.id)">
+                    {{ cancelingId === o.id ? '…' : 'Annuler' }}
+                  </button>
+                }
+              </td>
+            </tr>
+          } @empty {
+            <tr><td colspan="5" class="order-empty">Aucune commande.</td></tr>
+          }
+        </tbody>
+      </table>
+    </div>
+    @if (totalPages > 1) {
+      <div class="order-pagination">
+        <button type="button" (click)="goPage(page - 1)" [disabled]="page <= 0">Prec</button>
+        <span>{{ page + 1 }} / {{ totalPages }}</span>
+        <button type="button" (click)="goPage(page + 1)" [disabled]="page >= totalPages - 1">Suiv</button>
+      </div>
+    }
+  }
+</div>

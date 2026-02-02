@@ -131,6 +131,21 @@
 .wm-stat-suppliers { border-left: 4px solid #f59e0b; }
 .wm-stat-warehouses { border-left: 4px solid #8b5cf6; }
 
+.wm-charts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+  gap: 24px;
+  margin-bottom: 40px;
+}
+.wm-chart-card {
+  padding: 24px;
+  background: rgba(30, 41, 59, 0.6);
+  border: 1px solid #334155;
+  border-radius: 12px;
+  h3 { margin: 0 0 16px; font-size: 16px; font-weight: 600; color: #e2e8f0; }
+}
+.wm-chart-container { position: relative; height: 260px; }
+
 .wm-actions {
   margin-top: 24px;
 

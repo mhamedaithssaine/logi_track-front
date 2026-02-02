@@ -5,11 +5,7 @@ import { AuthService } from '../auth/auth.service';
 import { catchError, switchMap, throwError } from 'rxjs';
 import { API_CONFIG } from '../config/api.config';
 
-/**
- * Interceptor pour gérer le refresh automatique du token
- * Si une requête retourne 401 (token expiré), tente de rafraîchir le token
- * et réessaie la requête initiale
- */
+
 export const refreshTokenInterceptor: HttpInterceptorFn = (req, next) => {
   const authService = inject(AuthService);
   const router = inject(Router);
@@ -43,7 +39,7 @@ export const refreshTokenInterceptor: HttpInterceptorFn = (req, next) => {
           catchError((refreshError) => {
             // Si le refresh échoue, déconnecter l'utilisateur
             authService.logout();
-            router.navigate(['/auth/login']);
+            router.navigate(['/login']);
             return throwError(() => refreshError);
           })
         );

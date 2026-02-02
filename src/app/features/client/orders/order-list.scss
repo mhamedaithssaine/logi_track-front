@@ -1,0 +1,16 @@
+.order-list { max-width: 900px; margin: 0 auto; }
+.order-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; flex-wrap: wrap; gap: 12px; h2 { margin: 0; font-size: 22px; color: #a5b4fc; } }
+.order-btn-primary { padding: 10px 18px; font-size: 14px; font-weight: 600; color: #1e1b4b; background: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%); border: none; border-radius: 8px; text-decoration: none; cursor: pointer; display: inline-block; }
+.order-filters { display: flex; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+.order-input { flex: 1; min-width: 180px; padding: 10px 14px; font-size: 14px; color: #e2e8f0; background: rgba(30, 27, 75, 0.8); border: 1px solid #4338ca; border-radius: 8px; }
+.order-btn, .order-retry { padding: 10px 16px; font-size: 14px; font-weight: 600; color: #1e1b4b; background: #6366f1; border: none; border-radius: 8px; cursor: pointer; }
+.order-loading, .order-error { text-align: center; padding: 40px; background: rgba(30, 27, 75, 0.6); border: 1px solid #4338ca; border-radius: 12px; p { margin: 0 0 12px; color: #94a3b8; } }
+.order-table-wrap { overflow-x: auto; background: rgba(30, 27, 75, 0.6); border: 1px solid #4338ca; border-radius: 12px; margin-bottom: 16px; }
+.order-table { width: 100%; border-collapse: collapse; th, td { padding: 12px 16px; text-align: left; border-bottom: 1px solid #4338ca; color: #e2e8f0; } th { font-size: 12px; text-transform: uppercase; color: #94a3b8; } }
+.order-badge { font-size: 11px; padding: 4px 10px; border-radius: 8px; background: rgba(99, 102, 241, 0.2); color: #a5b4fc; }
+.order-empty { text-align: center; color: #94a3b8; padding: 24px !important; }
+.order-actions { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; a { color: #a5b4fc; } }
+.order-btn-cancel { padding: 6px 12px; font-size: 13px; font-weight: 600; color: #f87171; background: transparent; border: 1px solid #f87171; border-radius: 8px; cursor: pointer; }
+.order-btn-cancel:hover:not(:disabled) { background: rgba(248, 113, 113, 0.15); }
+.order-btn-cancel:disabled { opacity: 0.6; cursor: not-allowed; }
+.order-pagination { display: flex; align-items: center; gap: 12px; justify-content: center; flex-wrap: wrap; button { padding: 8px 16px; cursor: pointer; background: #4338ca; color: #e2e8f0; border: none; border-radius: 8px; } button:disabled { opacity: 0.5; cursor: not-allowed; } }

@@ -9,12 +9,14 @@ export const roleGuard = (allowedRoles: Array<'ADMIN' | 'WAREHOUSE_MANAGER' | 'C
     const authService = inject(AuthService);
     const router = inject(Router);
 
+    // S'assurer que l'utilisateur est chargé (stockage) avant de vérifier le rôle
+    authService.ensureUserLoaded();
 
     return authService.currentUser$.pipe(
       take(1),
       map((user) => {
         if (!user) {
-          router.navigate(['/auth/login'], {
+          router.navigate(['/login'], {
             queryParams: { returnUrl: state.url },
           });
           return false;

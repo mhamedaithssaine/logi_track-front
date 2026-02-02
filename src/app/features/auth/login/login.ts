@@ -89,29 +89,32 @@ export class Login {
   }
 
   /**
-   * Rediriger après connexion réussie
+   * Rediriger après connexion selon le rôle → espace de chacun.
+   * ADMIN et WAREHOUSE_MANAGER vont toujours vers leur espace (on ignore returnUrl).
+   * CLIENT : on respecte returnUrl si présent, sinon /client.
    */
   private redirectAfterLogin(): void {
-    if (this.returnUrl) {
-      this.router.navigateByUrl(this.returnUrl);
-    } else {
-      // Rediriger selon le rôle
-      const user = this.authService.getCurrentUser();
-      if (user) {
-        switch (user.role) {
-          case 'ADMIN':
-            this.router.navigate(['/admin']);
-            break;
-          case 'WAREHOUSE_MANAGER':
-            this.router.navigate(['/warehouse']);
-            break;
-          case 'CLIENT':
-            this.router.navigate(['/client']);
-            break;
-          default:
-            this.router.navigate(['/']);
+    const user = this.authService.getCurrentUser();
+    if (!user) {
+      this.router.navigate(['/']);
+      return;
+    }
+    switch (user.role) {
+      case 'ADMIN':
+        this.router.navigate(['/admin']);
+        return;
+      case 'WAREHOUSE_MANAGER':
+        this.router.navigate(['/warehouse']);
+        return;
+      case 'CLIENT':
+        if (this.returnUrl) {
+          this.router.navigateByUrl(this.returnUrl);
+        } else {
+          this.router.navigate(['/client']);
         }
-      }
+        return;
+      default:
+        this.router.navigate(['/']);
     }
   }
 

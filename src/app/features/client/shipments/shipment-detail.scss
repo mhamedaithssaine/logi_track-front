@@ -1,0 +1,13 @@
+.shipment-detail { max-width: 560px; margin: 0 auto; }
+.shipment-back { display: inline-block; margin-bottom: 16px; font-size: 14px; color: #94a3b8; text-decoration: none; }
+.shipment-loading, .shipment-error { padding: 40px; background: rgba(30, 27, 75, 0.6); border: 1px solid #4338ca; border-radius: 12px; text-align: center; p { margin: 0; color: #94a3b8; } }
+.shipment-detail-card { padding: 24px; background: rgba(30, 27, 75, 0.6); border: 1px solid #4338ca; border-radius: 12px; }
+.shipment-detail-card h2 { margin: 0 0 12px; font-size: 22px; color: #a5b4fc; }
+.shipment-detail-card h3 { margin: 24px 0 12px; font-size: 16px; color: #e2e8f0; }
+.shipment-tracking, .shipment-status { margin: 0 0 8px; font-size: 14px; color: #e2e8f0; }
+.shipment-badge { font-size: 12px; padding: 4px 10px; border-radius: 8px; background: rgba(99, 102, 241, 0.2); color: #a5b4fc; }
+.shipment-timeline { display: flex; flex-direction: column; gap: 12px; }
+.shipment-timeline-item { display: flex; align-items: center; gap: 12px; font-size: 14px; color: #e2e8f0; }
+.shipment-timeline-item .chip { font-size: 11px; padding: 4px 10px; border-radius: 8px; background: rgba(99, 102, 241, 0.25); color: #a5b4fc; font-weight: 600; }
+.shipment-lines { list-style: none; padding: 0; margin: 0; }
+.shipment-lines li { padding: 8px 0; border-bottom: 1px solid #4338ca; color: #e2e8f0; font-size: 14px; }

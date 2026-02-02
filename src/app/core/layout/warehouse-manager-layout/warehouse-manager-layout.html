@@ -1,53 +1,66 @@
-<div class="wm-layout">
-  <!-- Top Bar - style industriel / logistics -->
-  <header class="wm-topbar">
-    <div class="wm-brand">
-      <span class="wm-logo">📦</span>
-      <div>
-        <h1>LogiTrack</h1>
-        <p>Espace Entrepôt</p>
-      </div>
+<div class="wm-layout dashboard-layout">
+  <aside class="dashboard-sidebar">
+    <div class="dashboard-sidebar__header">
+      <h2 class="dashboard-sidebar__title">LogiTrack</h2>
+      <p class="dashboard-sidebar__subtitle">Espace Entrepôt</p>
     </div>
-    <nav class="wm-nav">
-      <a routerLink="/warehouse/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="wm-nav-item">
-        <span>🏠</span> Tableau de bord
+    <nav class="dashboard-sidebar__nav">
+      <a routerLink="/warehouse/dashboard" routerLinkActive="active" [routerLinkActiveOptions]="{ exact: true }" class="dashboard-nav__item">
+        <span class="dashboard-nav__icon" aria-hidden="true">📊</span>
+        Tableau de bord
       </a>
-      <a routerLink="/warehouse/profile" routerLinkActive="active" class="wm-nav-item">
-        <span>👤</span> Mon profil
+      <a routerLink="/warehouse/profile" routerLinkActive="active" class="dashboard-nav__item">
+        <span class="dashboard-nav__icon" aria-hidden="true">👤</span>
+        Mon profil
       </a>
-      <a routerLink="/warehouse/products" routerLinkActive="active" class="wm-nav-item">
-        <span>📦</span> Produits
+      <a routerLink="/warehouse/products" routerLinkActive="active" class="dashboard-nav__item">
+        <span class="dashboard-nav__icon" aria-hidden="true">📦</span>
+        Produits
       </a>
-      <a routerLink="/warehouse/suppliers" routerLinkActive="active" class="wm-nav-item">
-        <span>🚚</span> Fournisseurs
+      <a routerLink="/warehouse/suppliers" routerLinkActive="active" class="dashboard-nav__item">
+        <span class="dashboard-nav__icon" aria-hidden="true">🚚</span>
+        Fournisseurs
       </a>
-      <a routerLink="/warehouse/warehouses" routerLinkActive="active" class="wm-nav-item">
-        <span>🏭</span> Entrepôts
+      <a routerLink="/warehouse/warehouses" routerLinkActive="active" class="dashboard-nav__item">
+        <span class="dashboard-nav__icon" aria-hidden="true">🏭</span>
+        Mon entrepôt
       </a>
-      <a routerLink="/warehouse/inventory" routerLinkActive="active" class="wm-nav-item">
-        <span>📋</span> Inventaire
+      <a routerLink="/warehouse/inventory" routerLinkActive="active" class="dashboard-nav__item">
+        <span class="dashboard-nav__icon" aria-hidden="true">📋</span>
+        Inventaire
       </a>
-      <a routerLink="/warehouse/purchase-orders" routerLinkActive="active" class="wm-nav-item">
-        <span>📄</span> Commandes d'achat
+      <a routerLink="/warehouse/purchase-orders" routerLinkActive="active" class="dashboard-nav__item">
+        <span class="dashboard-nav__icon" aria-hidden="true">📄</span>
+        Commandes d'achat
       </a>
-      <a routerLink="/warehouse/orders" routerLinkActive="active" class="wm-nav-item">
-        <span>🛒</span> Commandes
+      <a routerLink="/warehouse/orders" routerLinkActive="active" class="dashboard-nav__item">
+        <span class="dashboard-nav__icon" aria-hidden="true">🛒</span>
+        Commandes
       </a>
-      <a routerLink="/warehouse/shipments" routerLinkActive="active" class="wm-nav-item">
-        <span>🚢</span> Expéditions
+      <a routerLink="/warehouse/shipments" routerLinkActive="active" class="dashboard-nav__item">
+        <span class="dashboard-nav__icon" aria-hidden="true">🚢</span>
+        Expéditions
       </a>
     </nav>
-    <div class="wm-user">
-      <span class="wm-email">{{ authService.getCurrentUser()?.email || 'Non connecté' }}</span>
-      <button (click)="authService.logout()" class="wm-logout">Déconnexion</button>
-    </div>
-  </header>
+  </aside>
 
-  <main class="wm-content">
-    <router-outlet />
-  </main>
+  <div class="dashboard-main">
+    <header class="dashboard-header">
+      <div class="dashboard-header__left">
+        <h1>Espace Entrepôt</h1>
+      </div>
+      <div class="dashboard-header__right">
+        <span class="dashboard-header__user">{{ authService.getCurrentUser()?.email || 'Non connecté' }}</span>
+        <button type="button" class="dashboard-btn-logout" (click)="authService.logout()">Déconnexion</button>
+      </div>
+    </header>
 
-  <footer class="wm-footer">
-    <p>LogiTrack — Espace Warehouse Manager &copy; 2026</p>
-  </footer>
+    <main class="dashboard-content">
+      <router-outlet />
+    </main>
+
+    <footer class="dashboard-footer">
+      <p>LogiTrack — Espace Warehouse Manager &copy; 2026</p>
+    </footer>
+  </div>
 </div>

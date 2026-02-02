@@ -1,0 +1,32 @@
+<article class="product-card" [class.product-card--inactive]="!product().active">
+  <div class="product-card__media">
+    <span class="product-card__placeholder">📦</span>
+  </div>
+  <div class="product-card__body">
+    @if (product().category) {
+      <span class="product-card__category">{{ product().category }}</span>
+    }
+    <h2 class="product-card__title">{{ product().name }}</h2>
+    <p class="product-card__sku">SKU {{ product().sku }}</p>
+    <p class="product-card__price">{{ product().price | number:'1.2-2' }} €</p>
+    <a [routerLink]="detailLink().length ? detailLink() : ['/client/catalogue', product().sku]" class="product-card__link">Voir le détail</a>
+  </div>
+  <div class="product-card__actions">
+    <div class="product-card__qty">
+      <app-quantity-selector
+        [quantity]="quantity()"
+        [min]="1"
+        [max]="99"
+        (quantityChange)="quantityChange.emit($event)"
+      />
+    </div>
+    <button
+      type="button"
+      class="product-card__btn-reserve"
+      [disabled]="!product().active"
+      (click)="reserve.emit(product())"
+    >
+      Réserver
+    </button>
+  </div>
+</article>

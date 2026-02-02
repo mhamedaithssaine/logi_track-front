@@ -1,0 +1,56 @@
+<div class="catalogue">
+  <header class="catalogue__hero">
+    <h1 class="catalogue__title">Catalogue</h1>
+    <p class="catalogue__subtitle">Parcourez les produits, ajustez les quantités et réservez en un clic.</p>
+  </header>
+
+  <section class="catalogue__toolbar">
+    <div class="catalogue__filter">
+      <label for="search" class="catalogue__label">Recherche (SKU, nom)</label>
+      <input id="search" type="text" [(ngModel)]="searchName" (input)="onSearch()" class="catalogue__input" placeholder="SKU ou nom du produit" />
+    </div>
+    <div class="catalogue__filter">
+      <label for="cat" class="catalogue__label">Catégorie</label>
+      <select id="cat" [(ngModel)]="selectedCategory" (change)="onCategoryChange()" class="catalogue__select">
+        <option value="">Toutes les catégories</option>
+        @for (c of categories; track c) {
+          <option [value]="c">{{ c }}</option>
+        }
+      </select>
+    </div>
+  </section>
+
+  @if (isLoading) {
+    <div class="catalogue__loading">
+      <div class="skeleton-grid">
+        @for (i of [1,2,3,4,5,6]; track i) {
+          <div class="skeleton-card">
+            <div class="skeleton skeleton--media"></div>
+            <div class="skeleton skeleton--line" style="width: 60%"></div>
+            <div class="skeleton skeleton--line" style="width: 80%"></div>
+            <div class="skeleton skeleton--line" style="width: 40%"></div>
+          </div>
+        }
+      </div>
+      <p class="catalogue__loading-text">Chargement du catalogue…</p>
+    </div>
+  } @else if (loadError) {
+    <div class="catalogue__error">
+      <p>{{ loadError }}</p>
+      <button type="button" class="btn-primary" (click)="load()">Réessayer</button>
+    </div>
+  } @else {
+    <div class="catalogue__grid">
+      @for (p of products; track p.sku) {
+        <app-product-card
+          [product]="p"
+          [quantity]="getQty(p.sku)"
+          (quantityChange)="setQty(p.sku, $event)"
+          (reserve)="reserve($event)"
+        />
+      } @empty {
+        <p class="catalogue__empty">Aucun produit dans cette catégorie.</p>
+      }
+    </div>
+  }
+</div>

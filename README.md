@@ -1,59 +1,85 @@
-# LogisticsFront
+# LogiTrack — Frontend
 
-This project was generated using [Angular CLI](https://github.com/angular/angular-cli) version 21.0.4.
+Application Angular moderne pour la gestion des commandes et de la logistique (espace client, admin, responsable d'entrepôt). Design 2024–2025 inspiré de Stripe, Linear, Vercel, Notion.
 
-## Development server
+## Prérequis
 
-To start a local development server, run:
+- Node.js 18+
+- npm 10+
+- Backend Spring Boot LogiTrack démarré sur `http://localhost:8080`
+
+## Installation
+
+```bash
+npm install
+```
+
+## Démarrage
 
 ```bash
 ng serve
 ```
 
-Once the server is running, open your browser and navigate to `http://localhost:4200/`. The application will automatically reload whenever you modify any of the source files.
+Ouvrir [http://localhost:4200](http://localhost:4200). L’application redirige vers `/auth/login` par défaut.
 
-## Code scaffolding
-
-Angular CLI includes powerful code scaffolding tools. To generate a new component, run:
-
-```bash
-ng generate component component-name
-```
-
-For a complete list of available schematics (such as `components`, `directives`, or `pipes`), run:
-
-```bash
-ng generate --help
-```
-
-## Building
-
-To build the project run:
+## Build production
 
 ```bash
 ng build
 ```
 
-This will compile your project and store the build artifacts in the `dist/` directory. By default, the production build optimizes your application for performance and speed.
+Les artefacts sont dans `dist/`.
 
-## Running unit tests
+## Structure du projet
 
-To execute unit tests with the [Vitest](https://vitest.dev/) test runner, use the following command:
+- **`core/`** — Guards, interceptors, services (auth, API), modèles, config
+- **`shared/`** — Composants réutilisables (toast, product-card, quantity-selector, cart-sidebar), services partagés
+- **`features/`** — Modules métier : auth (login/register), client (catalogue, commandes, expéditions), admin, warehouse-manager
+- **`layout/`** — Layouts (client, admin, warehouse-manager) avec navbar et panier
+
+## Design system
+
+Les variables CSS globales sont dans `src/styles.scss` :
+
+- **Couleurs** : fond `#FAFAFA`, accent `#6366F1`, texte `#1F2937` / `#6B7280`
+- **Typographie** : Inter (Google Fonts)
+- **Composants** : `.btn-base`, `.btn-primary`, `.card-base`, `.input-base`
+
+## API Backend
+
+Le front consomme l’API Spring Boot :
+
+- `GET /api/products/catalogue` — Catalogue (actifs, filtre catégorie)
+- `POST /api/auth/login` — Connexion
+- `POST /api/clients/register` — Inscription client
+- `GET /api/orders` — Liste commandes (avec `clientId` pour le client)
+- `POST /api/orders` — Créer une commande
+- etc.
+
+Configuration : `src/app/core/config/api.config.ts` (`baseUrl: 'http://localhost:8080/api'`).
+
+## Option : Tailwind CSS
+
+Pour ajouter Tailwind CSS (optionnel) :
+
+```bash
+npm install -D tailwindcss @tailwindcss/postcss postcss
+```
+
+Créer `.postcssrc.json` à la racine :
+
+```json
+{"plugins": {"@tailwindcss/postcss": {}}}
+```
+
+Puis dans `src/styles.scss` ajouter en première ligne : `@import "tailwindcss";`
+
+## Tests
 
 ```bash
 ng test
 ```
 
-## Running end-to-end tests
+## Licence
 
-For end-to-end (e2e) testing, run:
-
-```bash
-ng e2e
-```
-
-Angular CLI does not come with an end-to-end testing framework by default. You can choose one that suits your needs.
-
-## Additional Resources
-
-For more information on using the Angular CLI, including detailed command references, visit the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+Projet LogiTrack.

@@ -42,6 +42,37 @@
       </div>
       <a routerLink="/warehouse/warehouses" class="wm-stat-link">Voir →</a>
     </div>
+    <div class="wm-stat-card">
+      <span class="wm-stat-icon">📋</span>
+      <div>
+        <span class="wm-stat-value">{{ ordersToReserveCount }}</span>
+        <span class="wm-stat-label">À réserver</span>
+      </div>
+      <a routerLink="/warehouse/orders" class="wm-stat-link">Voir →</a>
+    </div>
+    <div class="wm-stat-card">
+      <span class="wm-stat-icon">🚢</span>
+      <div>
+        <span class="wm-stat-value">{{ shipmentsPlannedCount }}</span>
+        <span class="wm-stat-label">Expéditions</span>
+      </div>
+      <a routerLink="/warehouse/shipments" class="wm-stat-link">Voir →</a>
+    </div>
+  </section>
+
+  <section class="wm-charts">
+    <div class="wm-chart-card">
+      <h3>Entités & commandes à réserver</h3>
+      <div class="wm-chart-container">
+        <canvas baseChart [type]="'bar'" [data]="barChartData" [options]="barChartOptions"></canvas>
+      </div>
+    </div>
+    <div class="wm-chart-card">
+      <h3>Commandes par statut</h3>
+      <div class="wm-chart-container">
+        <canvas baseChart [type]="'doughnut'" [data]="doughnutChartData" [options]="doughnutChartOptions"></canvas>
+      </div>
+    </div>
   </section>
 
   <section class="wm-actions">

@@ -1,0 +1,12 @@
+@if (open) {
+  <div class="confirm-backdrop" (click)="onCancel()" role="presentation">
+    <div class="confirm-dialog" (click)="$event.stopPropagation()" role="dialog" aria-modal="true" [attr.aria-labelledby]="'confirm-title'" [attr.aria-describedby]="'confirm-desc'">
+      <h2 class="confirm-title" id="confirm-title">{{ title }}</h2>
+      <p class="confirm-message" id="confirm-desc">{{ message }}</p>
+      <div class="confirm-actions">
+        <button type="button" class="confirm-btn confirm-btn--cancel" (click)="onCancel()">{{ cancelLabel }}</button>
+        <button type="button" class="confirm-btn confirm-btn--confirm" [class.confirm-btn--danger]="type === 'danger'" [class.confirm-btn--warning]="type === 'warning'" [class.confirm-btn--primary]="type === 'primary'" (click)="onConfirm()">{{ confirmLabel }}</button>
+      </div>
+    </div>
+  </div>
+}
